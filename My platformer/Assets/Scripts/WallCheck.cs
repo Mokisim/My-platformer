@@ -19,11 +19,4 @@ public class WallCheck : MonoBehaviour
     {
         IsWallRight = Physics2D.Raycast(playerTransform.position + _wallRaycastOffset, Vector2.right, _wallRaycastLength, wallLayer);
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawLine(transform.position + _wallRaycastOffset, transform.position + _wallRaycastOffset + Vector3.right * _wallRaycastLength);
-    }
 }
