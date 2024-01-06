@@ -4,19 +4,37 @@ using UnityEngine;
 
 public class WallCheck : MonoBehaviour
 {
-    public bool IsWallRight {  get; private set; }
-    private Vector3 _wallRaycastOffset = new Vector3(0.09f, 0.04f, 1);
-    private float _wallRaycastLength = 0.53f;
+    [SerializeField] private Vector3 _wallRaycastOffset;
+    [SerializeField] private Vector3 _isWalledRightRaycastOffset;
+    [SerializeField] private Vector3 _isWalledLeftRaycastOffset;
+    [SerializeField] private LayerMask _wallLayer;
+    [SerializeField] private float _wallRaycastLength;
+    [SerializeField] private float _isWalledRaycastLength;
+    [SerializeField] private Transform _wallCheck;
 
-    public bool IsWalled(Transform wallCheck, LayerMask wallLayer)
+    public bool IsWallRight { get { return _isWallRight; } private set { } }
+    public bool IsWallLeft { get { return _isWallLeft; } private set { } }
+    private bool _isWallRight;
+    private bool _isWallLeft;
+
+    public bool IsWalled { get { return _isWalled; } private set { } }
+    private bool _isWalled;
+
+    public void CheckWallCollisions()
     {
-        float circleRadius = 0.2f;
+        _isWallRight = Physics2D.Raycast(_wallCheck.position + _wallRaycastOffset, Vector2.right, _wallRaycastLength, _wallLayer);
 
-        return Physics2D.OverlapCircle(wallCheck.position, circleRadius, wallLayer);
+        _isWalled = Physics2D.Raycast(_wallCheck.position + _isWalledRightRaycastOffset, Vector2.right, _isWalledRaycastLength, _wallLayer) 
+            || Physics2D.Raycast(_wallCheck.position - _isWalledLeftRaycastOffset, Vector2.left, _isWalledRaycastLength, _wallLayer);
     }
 
-    public void CheckCollisions(Transform playerTransform, LayerMask wallLayer)
+    private void OnDrawGizmos()
     {
-        IsWallRight = Physics2D.Raycast(playerTransform.position + _wallRaycastOffset, Vector2.right, _wallRaycastLength, wallLayer);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(_wallCheck.position + _wallRaycastOffset, _wallCheck.position + _wallRaycastOffset + Vector3.right * _wallRaycastLength);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(_wallCheck.position + _isWalledRightRaycastOffset, _wallCheck.position + _isWalledRightRaycastOffset + Vector3.right * _isWalledRaycastLength);
+        Gizmos.DrawLine(_wallCheck.position - _isWalledLeftRaycastOffset, _wallCheck.position - _isWalledLeftRaycastOffset + Vector3.left * _isWalledRaycastLength);
     }
 }
