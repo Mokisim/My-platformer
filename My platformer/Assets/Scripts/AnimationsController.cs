@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AnimationsController : MonoBehaviour
 {
     private GroundCheck _groundCheck;
-    [SerializeField]private Animator _animator;
+    private PlayerMovement _playerMovement;
+    private Animator _animator;
 
     private void Awake()
     {
         _groundCheck = GetComponent<GroundCheck>();
         _animator = GetComponent<Animator>();
+        _playerMovement = GetComponent<PlayerMovement>();
     }
 
-    public void TurnOnJumpAnimation()
+    private void Update()
+    {
+        TurnOnJumpAnimation();
+    }
+
+    private void TurnOnJumpAnimation()
     {
         if (!_groundCheck.OnGround)
         {
@@ -22,6 +30,19 @@ public class AnimationsController : MonoBehaviour
         else
         {
             _animator.SetBool("isGrounded", true);
+        }
+    }
+
+    private void TurnOnRunAnimation()
+    {
+
+    }
+
+    private void TurnOnWallSlidingAnimation()
+    {
+        if(!_groundCheck.OnGround && _playerMovement.IsWallSliding)
+        {
+            
         }
     }
 }

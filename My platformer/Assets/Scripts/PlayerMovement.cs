@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Wall sliding and jumping")]
     [SerializeField] private Vector2 _wallJumpingPower = new Vector2(30f, 20f);
+    public bool IsWallSliding { get { return _isWallSliding; } private set { } }
     private bool _isWallSliding;
     private float _wallSlidingSpeed = 2f;
     private bool _isWallJumping;
