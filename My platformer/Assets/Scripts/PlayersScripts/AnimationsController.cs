@@ -6,19 +6,20 @@ using UnityEngine;
 public class AnimationsController : MonoBehaviour
 {
     private GroundCheck _groundCheck;
-    private PlayerMovement _playerMovement;
     private Animator _animator;
+    private Rigidbody2D _rigidbody2D;
 
     private void Awake()
     {
         _groundCheck = GetComponent<GroundCheck>();
         _animator = GetComponent<Animator>();
-        _playerMovement = GetComponent<PlayerMovement>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
         TurnOnJumpAnimation();
+        TurnOnRunAnimation();
     }
 
     private void TurnOnJumpAnimation()
@@ -35,14 +36,17 @@ public class AnimationsController : MonoBehaviour
 
     private void TurnOnRunAnimation()
     {
+        bool isRunning;
 
-    }
-
-    private void TurnOnWallSlidingAnimation()
-    {
-        if(!_groundCheck.OnGround && _playerMovement.IsWallSliding)
+        if (_rigidbody2D.velocity.x != 0)
         {
-            
+            isRunning = true;
         }
+        else
+        {
+            isRunning = false;
+        }
+
+        _animator.SetBool("isRunning", isRunning);
     }
 }
