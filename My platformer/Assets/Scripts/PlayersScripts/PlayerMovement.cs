@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(InputControl))]
 [RequireComponent(typeof(GroundCheck))]
 [RequireComponent(typeof(WallCheck))]
 [RequireComponent(typeof(ApplyingLinearDrag))]
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Transform _playerTransform;
 
-    private InputManager _inputManager;
+    private InputControl _inputManager;
     private GroundCheck _groundCheck;
     private WallCheck _wallCheck;
 
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerTransform = GetComponent<Transform>();
-        _inputManager = GetComponent<InputManager>();
+        _inputManager = GetComponent<InputControl>();
         _groundCheck = GetComponent<GroundCheck>();
         _wallCheck = GetComponent<WallCheck>();
         _applyingLinearDrag = GetComponent<ApplyingLinearDrag>();

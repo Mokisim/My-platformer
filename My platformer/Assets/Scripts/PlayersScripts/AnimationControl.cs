@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(GroundCheck))]
 [RequireComponent(typeof(Animator))]
-public class AnimationsController : MonoBehaviour
+public class AnimationControl : MonoBehaviour
 {
     private GroundCheck _groundCheck;
     private Animator _animator;

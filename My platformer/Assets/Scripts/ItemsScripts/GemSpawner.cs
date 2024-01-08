@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GemSpawner : MonoBehaviour
 {
-    [SerializeField] private GemScript _gemPrefab;
+    [SerializeField] private Gem _gemPrefab;
     [SerializeField] Transform _spawnPoint;
 
     private Transform[] _points;

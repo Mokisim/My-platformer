@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class GemScript : MonoBehaviour
+public class Gem : MonoBehaviour
 {
     [SerializeField] private AudioClip _gemClip;
 
