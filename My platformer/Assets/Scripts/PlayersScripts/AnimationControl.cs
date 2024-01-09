@@ -9,6 +9,9 @@ public class AnimationControl : MonoBehaviour
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
 
+    private int _isRunningHash = Animator.StringToHash("isRunning");
+    private int _isGroundedHash = Animator.StringToHash("isGrounded");
+
     private void Awake()
     {
         _groundCheck = GetComponent<GroundCheck>();
@@ -26,11 +29,11 @@ public class AnimationControl : MonoBehaviour
     {
         if (!_groundCheck.OnGround)
         {
-            _animator.SetBool("isGrounded", false);
+            _animator.SetBool(_isGroundedHash, false);
         }
         else
         {
-            _animator.SetBool("isGrounded", true);
+            _animator.SetBool(_isGroundedHash, true);
         }
     }
 
@@ -47,6 +50,6 @@ public class AnimationControl : MonoBehaviour
             isRunning = false;
         }
 
-        _animator.SetBool("isRunning", isRunning);
+        _animator.SetBool(_isRunningHash, isRunning);
     }
 }
