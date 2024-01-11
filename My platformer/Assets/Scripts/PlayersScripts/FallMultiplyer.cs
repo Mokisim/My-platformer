@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FallMultiplying : MonoBehaviour
+public class FallMultiplyer : MonoBehaviour
 {
     private float _fallMultiplier = 7f;
     private float _lowJumpFallMultiplier = 2f;

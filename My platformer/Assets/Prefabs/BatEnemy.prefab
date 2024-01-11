@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6298935266968842593}
   - component: {fileID: 4086196912289160713}
   - component: {fileID: 3037295254142279532}
-  - component: {fileID: 7906025333331802318}
+  - component: {fileID: 8824509235288503473}
+  - component: {fileID: 7669954531845864234}
   m_Layer: 0
   m_Name: BatEnemy
   m_TagString: Untagged
@@ -181,7 +182,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.59196997, y: 0.801641}
   m_EdgeRadius: 0
---- !u!114 &7906025333331802318
+--- !u!114 &8824509235288503473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,7 +191,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2433757381525507196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9a0f3b220fc9364db1d3db7bca5904c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fe49b9479e22474fb99ae2677822f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7669954531845864234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433757381525507196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89c9fc741e6aff4eac185b5ac7c5376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _path: {fileID: 0}

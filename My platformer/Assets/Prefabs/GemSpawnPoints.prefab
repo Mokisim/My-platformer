@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5309716884192619964}
-  - component: {fileID: 6657660811970700184}
+  - component: {fileID: 6501818048155652275}
   m_Layer: 0
   m_Name: GemSpawnPoints
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 4600199198017212862}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6657660811970700184
+--- !u!114 &6501818048155652275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,10 +46,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 599563681104140834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147a482436fe3204cae1548e93b4e3e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 748343b3fa5cff9489ab42881b6c5882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gemPrefab: {fileID: 7060857927929986537, guid: 9cf72498c3f0bc84bab8272bf9377de8, type: 3}
+  _objectPrefab: {fileID: 7706917436944523693, guid: 9cf72498c3f0bc84bab8272bf9377de8, type: 3}
   _spawnPoint: {fileID: 5309716884192619964}
 --- !u!1 &1781692461207647790
 GameObject:

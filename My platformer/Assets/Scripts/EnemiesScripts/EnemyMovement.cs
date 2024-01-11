@@ -1,26 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody2D))]
-public class DinoEnemyScript : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
 
-    private Rigidbody2D _rigidbody2D;
-    private Animator _animator;
     private Transform[] _points;
     private float _speed = 4f;
     private int _currentPoint;
     private bool _facingRight = true;
-    private bool _isRunning;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-
         _points = new Transform[_path.childCount];
 
         for (int i = 0; i < _path.childCount; i++)
@@ -32,12 +22,11 @@ public class DinoEnemyScript : MonoBehaviour
     private void Update()
     {
         Move();
-        ControlAnimations();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.TryGetComponent<Player>(out Player player))
+        if (collision.collider.TryGetComponent<Player>(out Player player))
         {
             player.TakeDamage();
         }
@@ -59,7 +48,7 @@ public class DinoEnemyScript : MonoBehaviour
             }
         }
 
-        if (transform.position.x > target.position.x && !_facingRight)
+        if (transform.position.x > target.position.x && _facingRight == false)
         {
             Flip();
         }
@@ -67,11 +56,6 @@ public class DinoEnemyScript : MonoBehaviour
         {
             Flip();
         }
-    }
-
-    private void ControlAnimations()
-    {
-        _animator.SetBool("isRunning", true);
     }
 
     private void Flip()

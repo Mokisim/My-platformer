@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6654879461833179098}
   - component: {fileID: 4544545411167354566}
   - component: {fileID: 4116201082444374725}
-  - component: {fileID: 6572720424506334984}
+  - component: {fileID: 2801106852719238498}
+  - component: {fileID: 3926264172343013230}
   m_Layer: 0
   m_Name: DinoEnemy
   m_TagString: Untagged
@@ -172,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe49b9479e22474fb99ae2677822f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6572720424506334984
+--- !u!114 &2801106852719238498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +182,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4641829771692995529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fcc1e73150642444bbd9a269db5f0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: e89c9fc741e6aff4eac185b5ac7c5376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _path: {fileID: 0}
+--- !u!95 &3926264172343013230
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641829771692995529}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e66213100fc41eb46855e80facd88fc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

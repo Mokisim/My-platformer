@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 
-public class InputControl : MonoBehaviour
+public class InputGetter : MonoBehaviour
 {
     private const string _jumpInput = "Jump";
     private const string _horizontalAxis = "Horizontal";

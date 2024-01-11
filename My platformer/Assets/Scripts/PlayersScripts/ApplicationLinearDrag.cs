@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ApplyingLinearDrag : MonoBehaviour
+public class ApplicationLinearDrag : MonoBehaviour
 {
     private float _groundLinearDrag = 5f;
     private float _airLinearDrag = 5f;

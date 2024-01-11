@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WallCheck : MonoBehaviour
+public class WallVerifier : MonoBehaviour
 {
     [SerializeField] private Vector3 _wallRaycastOffset;
     [SerializeField] private Vector3 _isWalledRightRaycastOffset;

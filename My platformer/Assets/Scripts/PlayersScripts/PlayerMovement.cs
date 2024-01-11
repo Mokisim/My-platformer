@@ -1,27 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(InputControl))]
-[RequireComponent(typeof(GroundCheck))]
-[RequireComponent(typeof(WallCheck))]
-[RequireComponent(typeof(ApplyingLinearDrag))]
-[RequireComponent(typeof(FallMultiplying))]
+[RequireComponent(typeof(InputGetter))]
+[RequireComponent(typeof(GroundVerifier))]
+[RequireComponent(typeof(WallVerifier))]
+[RequireComponent(typeof(ApplicationLinearDrag))]
+[RequireComponent(typeof(FallMultiplyer))]
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Transform _playerTransform;
 
-    private InputControl _inputManager;
-    private GroundCheck _groundCheck;
-    private WallCheck _wallCheck;
+    private InputGetter _inputManager;
+    private GroundVerifier _groundCheck;
+    private WallVerifier _wallCheck;
 
-    private FallMultiplying _fallMultiplier;
-    private ApplyingLinearDrag _applyingLinearDrag;
+    private FallMultiplyer _fallMultiplier;
+    private ApplicationLinearDrag _applyingLinearDrag;
 
     private bool _facingRight = true;
     private float _horizontalDirection;
@@ -54,11 +52,11 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerTransform = GetComponent<Transform>();
-        _inputManager = GetComponent<InputControl>();
-        _groundCheck = GetComponent<GroundCheck>();
-        _wallCheck = GetComponent<WallCheck>();
-        _applyingLinearDrag = GetComponent<ApplyingLinearDrag>();
-        _fallMultiplier = GetComponent<FallMultiplying>();
+        _inputManager = GetComponent<InputGetter>();
+        _groundCheck = GetComponent<GroundVerifier>();
+        _wallCheck = GetComponent<WallVerifier>();
+        _applyingLinearDrag = GetComponent<ApplicationLinearDrag>();
+        _fallMultiplier = GetComponent<FallMultiplyer>();
     }
 
     private void Update()
@@ -66,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         _horizontalDirection = _inputManager.GetInput().x;
         _horizontal = _inputManager.GetHorizontalAxisInput();
 
-        if (_horizontal > 0 && !_facingRight)
+        if (_horizontal > 0 && _facingRight == false)
         {
             Flip();
         }
@@ -100,8 +98,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _hangTimeCounter -= Time.deltaTime;
         }
-
-        Debug.Log(_canJump.ToString());
     }
 
     private void FixedUpdate()
@@ -111,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         _groundCheck.CheckGroundCollisions();
         _wallCheck.CheckWallCollisions();
 
-        if (_groundCheck.OnGround || !_isWallSliding || !_isWallJumping)
+        if (_groundCheck.OnGround || _isWallSliding == false || _isWallJumping == false)
         {
             _rigidbody2D.velocity = new Vector2(_horizontal * _movementSpeed, _rigidbody2D.velocity.y);
         }
@@ -143,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        if (_wallCheck.IsWalled && !_groundCheck.OnGround && _inputManager.GetHorizontalAxisInput() != 0)
+        if (_wallCheck.IsWalled && _groundCheck.OnGround == false && _inputManager.GetHorizontalAxisInput() != 0)
         {
             _isWallSliding = true;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, Mathf.Clamp(_rigidbody2D.velocity.y, -_wallSlidingSpeed, float.MaxValue));

@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(GroundCheck))]
+[RequireComponent(typeof(GroundVerifier))]
 [RequireComponent(typeof(Animator))]
-public class AnimationControl : MonoBehaviour
+public class AnimationSwitcher : MonoBehaviour
 {
-    private GroundCheck _groundCheck;
+    private GroundVerifier _groundCheck;
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
 
@@ -14,7 +14,7 @@ public class AnimationControl : MonoBehaviour
 
     private void Awake()
     {
-        _groundCheck = GetComponent<GroundCheck>();
+        _groundCheck = GetComponent<GroundVerifier>();
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -27,7 +27,7 @@ public class AnimationControl : MonoBehaviour
 
     private void TurnOnJumpAnimation()
     {
-        if (!_groundCheck.OnGround)
+        if (_groundCheck.OnGround == false)
         {
             _animator.SetBool(_isGroundedHash, false);
         }
