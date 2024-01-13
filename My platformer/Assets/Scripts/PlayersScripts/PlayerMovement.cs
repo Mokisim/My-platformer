@@ -3,9 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(InputGetter))]
-[RequireComponent(typeof(GroundVerifier))]
-[RequireComponent(typeof(WallVerifier))]
+[RequireComponent(typeof(InputReader))]
+[RequireComponent(typeof(GroundDetector))]
+[RequireComponent(typeof(WallDetector))]
 [RequireComponent(typeof(ApplicationLinearDrag))]
 [RequireComponent(typeof(FallMultiplyer))]
 public class PlayerMovement : MonoBehaviour
@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Transform _playerTransform;
 
-    private InputGetter _inputManager;
-    private GroundVerifier _groundCheck;
-    private WallVerifier _wallCheck;
+    private InputReader _inputManager;
+    private GroundDetector _groundCheck;
+    private WallDetector _wallCheck;
 
     private FallMultiplyer _fallMultiplier;
     private ApplicationLinearDrag _applyingLinearDrag;
@@ -39,22 +39,22 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Wall sliding and jumping")]
     [SerializeField] private Vector2 _wallJumpingPower = new Vector2(30f, 20f);
-    public bool IsWallSliding { get { return _isWallSliding; } private set { } }
     private bool _isWallSliding;
     private float _wallSlidingSpeed = 2f;
     private bool _isWallJumping;
     private float _wallJumpingTime = 0.2f;
     private float _wallJumpingCounter = 1f;
     private float _wallJumpingDuration = 0.3f;
+    public bool IsWallSliding { get { return _isWallSliding; } private set { } }
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerTransform = GetComponent<Transform>();
-        _inputManager = GetComponent<InputGetter>();
-        _groundCheck = GetComponent<GroundVerifier>();
-        _wallCheck = GetComponent<WallVerifier>();
+        _inputManager = GetComponent<InputReader>();
+        _groundCheck = GetComponent<GroundDetector>();
+        _wallCheck = GetComponent<WallDetector>();
         _applyingLinearDrag = GetComponent<ApplicationLinearDrag>();
         _fallMultiplier = GetComponent<FallMultiplyer>();
     }
@@ -98,12 +98,13 @@ public class PlayerMovement : MonoBehaviour
         {
             _hangTimeCounter -= Time.deltaTime;
         }
+
+        WallSlide();
+        WallJump();
     }
 
     private void FixedUpdate()
     {
-        WallSlide();
-        WallJump();
         _groundCheck.CheckGroundCollisions();
         _wallCheck.CheckWallCollisions();
 

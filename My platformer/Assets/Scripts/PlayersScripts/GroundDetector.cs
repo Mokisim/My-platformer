@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class GroundVerifier : MonoBehaviour
+public class GroundDetector : MonoBehaviour
 {
-    public bool OnGround { get; private set; }
-
-    [SerializeField]private Vector3 _groundRaycastOffset = new Vector3(0.2f, 0, 0);
-    [SerializeField]private float _groundRaycastLength = 0.7f;
+    [SerializeField] private Vector3 _groundRaycastOffset = new Vector3(0.2f, 0, 0);
+    [SerializeField] private float _groundRaycastLength = 0.7f;
     [SerializeField] private Transform _groundCheckPoint;
     [SerializeField] private LayerMask _groundLayer;
+    public bool OnGround { get; private set; }
 
     public void CheckGroundCollisions()
     {

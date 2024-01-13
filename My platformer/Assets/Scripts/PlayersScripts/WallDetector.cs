@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WallVerifier : MonoBehaviour
+public class WallDetector : MonoBehaviour
 {
     [SerializeField] private Vector3 _wallRaycastOffset;
     [SerializeField] private Vector3 _isWalledRightRaycastOffset;
@@ -10,19 +10,14 @@ public class WallVerifier : MonoBehaviour
     [SerializeField] private float _isWalledRaycastLength;
     [SerializeField] private Transform _wallCheck;
 
-    public bool IsWallRight { get { return _isWallRight; } private set { } }
-    public bool IsWallLeft { get { return _isWallLeft; } private set { } }
-    private bool _isWallRight;
-    private bool _isWallLeft;
-
-    public bool IsWalled { get { return _isWalled; } private set { } }
-    private bool _isWalled;
+    public bool IsWallRight { get; private set; }
+    public bool IsWalled { get; private set; }
 
     public void CheckWallCollisions()
     {
-        _isWallRight = Physics2D.Raycast(_wallCheck.position + _wallRaycastOffset, Vector2.right, _wallRaycastLength, _wallLayer);
+        IsWallRight = Physics2D.Raycast(_wallCheck.position + _wallRaycastOffset, Vector2.right, _wallRaycastLength, _wallLayer);
 
-        _isWalled = Physics2D.Raycast(_wallCheck.position + _isWalledRightRaycastOffset, Vector2.right, _isWalledRaycastLength, _wallLayer) 
+        IsWalled = Physics2D.Raycast(_wallCheck.position + _isWalledRightRaycastOffset, Vector2.right, _isWalledRaycastLength, _wallLayer)
             || Physics2D.Raycast(_wallCheck.position - _isWalledLeftRaycastOffset, Vector2.left, _isWalledRaycastLength, _wallLayer);
     }
 

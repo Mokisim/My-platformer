@@ -4,6 +4,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _objectPrefab;
     [SerializeField] Transform _spawnPoint;
+    [SerializeField] private int _objectCount;
 
     private Transform[] _points;
 
@@ -19,7 +20,14 @@ public class ObjectSpawner : MonoBehaviour
 
     private void Start()
     {
-        Spawn();
+        if (_objectCount <= 0)
+        {
+            Spawn();
+        }
+        else
+        {
+            RandomSpawn();
+        }
     }
 
     private void Spawn()
@@ -34,6 +42,18 @@ public class ObjectSpawner : MonoBehaviour
         else
         {
             _objectPrefab = Instantiate(_objectPrefab, _spawnPoint.position, Quaternion.identity);
+        }
+    }
+
+    private void RandomSpawn()
+    {
+        for (int i = 0; i < _objectCount; i++)
+        {
+            int minRandomNumber = 0;
+            int randomIndex = Random.Range(minRandomNumber, _points.Length);
+            Transform randomPoint = _points[randomIndex];
+
+            _objectPrefab = Instantiate(_objectPrefab, randomPoint.position, Quaternion.identity);
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InputGetter : MonoBehaviour
+public class InputReader : MonoBehaviour
 {
     private const string _jumpInput = "Jump";
     private const string _horizontalAxis = "Horizontal";
