@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Following))]
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
@@ -10,12 +9,10 @@ public class EnemyMovement : MonoBehaviour
     private float _speed = 4f;
     private int _currentPoint;
     private bool _facingRight = true;
-    [SerializeField]private Player _player;
-
+    
     private bool _isPatrol = true;
     private bool _isFollow;
     private bool _isReturn;
-    private Following _following;
     
     private void Awake()
     {
@@ -30,7 +27,6 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         Patrol();
-        FollowPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,6 +34,25 @@ public class EnemyMovement : MonoBehaviour
         if (collision.collider.TryGetComponent<Player>(out Player player))
         {
             player.TakeDamage();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Player>(out Player player))
+        {
+            _isFollow = true;
+            _isPatrol = false;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Player>(out Player player))
+        {
+            _isFollow = false;
+            _isPatrol = true;
         }
     }
 
@@ -71,21 +86,6 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             return;
-        }
-    }
-
-    private void FollowPlayer()
-    {
-        if(_following.IsPlayerEnter == true)
-        {
-            _isPatrol = false;
-            _isFollow = true;
-            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
-        }
-        else
-        {
-            _isPatrol = true;
-            _isFollow = false;
         }
     }
 
