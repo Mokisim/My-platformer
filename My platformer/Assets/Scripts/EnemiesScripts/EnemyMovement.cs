@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class EnemyMovement : MonoBehaviour
     
     private bool _isPatrol = true;
     private bool _isFollow;
-    private bool _isReturn;
     
     private void Awake()
     {
@@ -37,13 +37,14 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
             _isFollow = true;
             _isPatrol = false;
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
+            TrackTarget(player.transform);
         }
     }
 
@@ -74,18 +75,23 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
 
-            if (transform.position.x > target.position.x && _facingRight == false)
-            {
-                Flip();
-            }
-            else if (transform.position.x < target.position.x && _facingRight)
-            {
-                Flip();
-            }
+            TrackTarget(target);
         }
         else
         {
             return;
+        }
+    }
+
+    private void TrackTarget(Transform target)
+    {
+        if (transform.position.x > target.position.x && _facingRight == false)
+        {
+            Flip();
+        }
+        else if (transform.position.x < target.position.x && _facingRight)
+        {
+            Flip();
         }
     }
 
