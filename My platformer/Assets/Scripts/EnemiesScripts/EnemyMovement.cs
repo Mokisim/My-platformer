@@ -1,14 +1,22 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Following))]
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
-
+    [SerializeField] private bool _canFollow;
+    
     private Transform[] _points;
     private float _speed = 4f;
     private int _currentPoint;
     private bool _facingRight = true;
+    [SerializeField]private Player _player;
 
+    private bool _isPatrol = true;
+    private bool _isFollow;
+    private bool _isReturn;
+    private Following _following;
+    
     private void Awake()
     {
         _points = new Transform[_path.childCount];
@@ -21,7 +29,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        Patrol();
+        FollowPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -32,29 +41,51 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Patrol()
     {
-        Transform target = _points[_currentPoint];
-
-        transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
-
-        if (transform.position == target.position)
+        if (_isPatrol == true)
         {
-            _currentPoint++;
+            Transform target = _points[_currentPoint];
 
-            if (_currentPoint >= _points.Length)
+            transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
+
+            if (transform.position == target.position)
             {
-                _currentPoint = 0;
+                _currentPoint++;
+
+                if (_currentPoint >= _points.Length)
+                {
+                    _currentPoint = 0;
+                }
+            }
+
+            if (transform.position.x > target.position.x && _facingRight == false)
+            {
+                Flip();
+            }
+            else if (transform.position.x < target.position.x && _facingRight)
+            {
+                Flip();
             }
         }
-
-        if (transform.position.x > target.position.x && _facingRight == false)
+        else
         {
-            Flip();
+            return;
         }
-        else if (transform.position.x < target.position.x && _facingRight)
+    }
+
+    private void FollowPlayer()
+    {
+        if(_following.IsPlayerEnter == true)
         {
-            Flip();
+            _isPatrol = false;
+            _isFollow = true;
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
+        }
+        else
+        {
+            _isPatrol = true;
+            _isFollow = false;
         }
     }
 
