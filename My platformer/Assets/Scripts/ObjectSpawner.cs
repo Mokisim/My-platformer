@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
@@ -45,15 +47,40 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    private void RandomSpawn()
+    private List<Transform> GenerateRandomSpawnPoints()
     {
+        List<Transform> randomPoints = new List<Transform>();
+        int minRandomNumber = 0;
+
         for (int i = 0; i < _objectCount; i++)
         {
-            int minRandomNumber = 0;
             int randomIndex = Random.Range(minRandomNumber, _points.Length);
             Transform randomPoint = _points[randomIndex];
+            randomPoints.Add(randomPoint);
+        }
 
-            _objectPrefab = Instantiate(_objectPrefab, randomPoint.position, Quaternion.identity);
+        for (int i = 0; i < randomPoints.Count; i++)
+        {
+            for(int j = 1; j < randomPoints.Count; j++)
+            {
+                if (randomPoints[i] == randomPoints[j])
+                {
+                    randomPoints[i] = _points[Random.Range(minRandomNumber, _points.Length)];
+                    j = 1;
+                }
+            }
+        }
+
+        return randomPoints;
+    }
+
+    private void RandomSpawn()
+    {
+        List<Transform> randomPoints = GenerateRandomSpawnPoints();
+
+        for (int i = 0; i < randomPoints.Count; i++) 
+        {
+            _objectPrefab = Instantiate(_objectPrefab, randomPoints[i].position, Quaternion.identity);
         }
     }
 }
