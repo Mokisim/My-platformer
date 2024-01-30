@@ -49,26 +49,17 @@ public class ObjectSpawner : MonoBehaviour
 
     private List<Transform> GenerateRandomSpawnPoints()
     {
-        List<Transform> randomPoints = new List<Transform>();
+        List<Transform> randomIndices = new List<Transform>(_points);
+        List<Transform> randomPoints = new List<Transform>(_objectCount);
+        List<int> indicesCopy = new List<int>();
         int minRandomNumber = 0;
 
-        for (int i = 0; i < _objectCount; i++)
+        while(randomPoints.Count < 5)
         {
-            int randomIndex = Random.Range(minRandomNumber, _points.Length);
-            Transform randomPoint = _points[randomIndex];
-            randomPoints.Add(randomPoint);
-        }
+            int randomIndex = Random.Range(minRandomNumber, randomIndices.Count);
 
-        for (int i = 0; i < randomPoints.Count; i++)
-        {
-            for(int j = 1; j < randomPoints.Count; j++)
-            {
-                if (randomPoints[i] == randomPoints[j])
-                {
-                    randomPoints[i] = _points[Random.Range(minRandomNumber, _points.Length)];
-                    j = 1;
-                }
-            }
+            randomPoints.Add(randomIndices[randomIndex]);
+            randomIndices.RemoveAt(randomIndex);
         }
 
         return randomPoints;
@@ -78,7 +69,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         List<Transform> randomPoints = GenerateRandomSpawnPoints();
 
-        for (int i = 0; i < randomPoints.Count; i++) 
+        for (int i = 0; i < randomPoints.Count; i++)
         {
             _objectPrefab = Instantiate(_objectPrefab, randomPoints[i].position, Quaternion.identity);
         }
