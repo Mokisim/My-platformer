@@ -4,25 +4,15 @@ using UnityEngine;
 
 public class Cherry : MonoBehaviour
 {
-    [SerializeField] private AudioClip _cherryClip;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    // Start is called before the first frame update
+    void Start()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            player.RestoreHealth();
-            PlaySound();
-            Destroy();
-        }
+        
     }
 
-    private void PlaySound()
+    // Update is called once per frame
+    void Update()
     {
-        AudioSource.PlayClipAtPoint(_cherryClip, transform.position);
-    }
-
-    private void Destroy()
-    {
-        Destroy(gameObject);
+        
     }
 }

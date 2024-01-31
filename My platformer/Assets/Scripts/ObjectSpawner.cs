@@ -5,18 +5,18 @@ using UnityEngine;
 public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _objectPrefab;
-    [SerializeField] Transform _spawnPoint;
+    [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _objectCount;
 
-    private Transform[] _points;
+    private List<Transform> _points;
 
     private void Awake()
     {
-        _points = new Transform[_spawnPoint.childCount];
+        _points = new List<Transform>(_spawnPoint.childCount);
 
         for (int i = 0; i < _spawnPoint.childCount; i++)
         {
-            _points[i] = _spawnPoint.GetChild(i);
+            _points.Add(_spawnPoint.GetChild(i));
         }
     }
 
@@ -24,21 +24,21 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (_objectCount <= 0)
         {
-            Spawn();
+            Spawn(_points);
         }
         else
         {
-            RandomSpawn();
+            Spawn(GenerateRandomSpawnPoints());
         }
     }
 
-    private void Spawn()
+    private void Spawn(List<Transform> points)
     {
         if (_spawnPoint.childCount > 0)
         {
-            for (int i = 0; i < _points.Length; i++)
+            for (int i = 0; i < points.Count; i++)
             {
-                _objectPrefab = Instantiate(_objectPrefab, _points[i].position, Quaternion.identity);
+                _objectPrefab = Instantiate(_objectPrefab, points[i].position, Quaternion.identity);
             }
         }
         else
@@ -51,10 +51,9 @@ public class ObjectSpawner : MonoBehaviour
     {
         List<Transform> randomIndices = new List<Transform>(_points);
         List<Transform> randomPoints = new List<Transform>(_objectCount);
-        List<int> indicesCopy = new List<int>();
         int minRandomNumber = 0;
 
-        while(randomPoints.Count < 5)
+        while (randomPoints.Count < _objectCount)
         {
             int randomIndex = Random.Range(minRandomNumber, randomIndices.Count);
 
@@ -63,15 +62,5 @@ public class ObjectSpawner : MonoBehaviour
         }
 
         return randomPoints;
-    }
-
-    private void RandomSpawn()
-    {
-        List<Transform> randomPoints = GenerateRandomSpawnPoints();
-
-        for (int i = 0; i < randomPoints.Count; i++)
-        {
-            _objectPrefab = Instantiate(_objectPrefab, randomPoints[i].position, Quaternion.identity);
-        }
     }
 }

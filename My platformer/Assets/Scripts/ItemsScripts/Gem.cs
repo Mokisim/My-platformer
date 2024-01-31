@@ -1,25 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
-    [SerializeField] private AudioClip _gemClip;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    // Start is called before the first frame update
+    void Start()
     {
-        if(collision.TryGetComponent<Player>(out Player player))
-        {
-            PlaySound();
-            Destroy();
-        }
+        
     }
 
-    private void PlaySound()
+    // Update is called once per frame
+    void Update()
     {
-        AudioSource.PlayClipAtPoint(_gemClip, transform.position);
-    }
-
-    private void Destroy()
-    {
-        Destroy(gameObject);
+        
     }
 }

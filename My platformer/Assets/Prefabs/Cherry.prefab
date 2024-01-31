@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1900610165744612997}
   - component: {fileID: 5884003103574287029}
   - component: {fileID: 4987979293190576769}
-  - component: {fileID: 5581386645578518596}
+  - component: {fileID: 6883516309356921883}
+  - component: {fileID: 203306013702561211}
   m_Layer: 0
   m_Name: Cherry
   m_TagString: Untagged
@@ -240,7 +241,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5581386645578518596
+--- !u!114 &6883516309356921883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5879043420051066246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30af5de15e25eb046b4d235845a6f3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemClip: {fileID: 8300000, guid: 6cd61902740f87445b9041647d7d0f39, type: 3}
+--- !u!114 &203306013702561211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,4 +266,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108d68c52a806e946950c05564f2eed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cherryClip: {fileID: 8300000, guid: 6cd61902740f87445b9041647d7d0f39, type: 3}

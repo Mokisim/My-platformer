@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private const string RespawnHash = "Respawn";
+
     [SerializeField] private int _maxHealth;
-    private const string _respawnHash = "Respawn";
     public int CurrentHealth { get; private set; }
 
     private void Start()
@@ -11,11 +12,21 @@ public class Player : MonoBehaviour
         CurrentHealth = _maxHealth;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Cherry>(out Cherry cherry))
+        {
+            cherry.TryGetComponent<Item>(out Item item);
+            item.DestroyWithSound();
+            RestoreHealth();
+        }
+    }
+
     public void TakeDamage()
     {
         CurrentHealth--;
 
-        GameObject playerSpawn = GameObject.FindWithTag(_respawnHash);
+        GameObject playerSpawn = GameObject.FindWithTag(RespawnHash);
 
         transform.position = playerSpawn.transform.position;
         Debug.Log(CurrentHealth.ToString());
