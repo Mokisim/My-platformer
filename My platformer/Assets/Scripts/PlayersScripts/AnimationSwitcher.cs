@@ -27,29 +27,11 @@ public class AnimationSwitcher : MonoBehaviour
 
     private void TurnOnJumpAnimation()
     {
-        if (_groundCheck.OnGround == false)
-        {
-            _animator.SetBool(_isGroundedHash, false);
-        }
-        else
-        {
-            _animator.SetBool(_isGroundedHash, true);
-        }
+        _animator.SetBool(_isGroundedHash, _rigidbody2D.velocity.y == 0);
     }
 
     private void TurnOnRunAnimation()
     {
-        bool isRunning;
-
-        if (_rigidbody2D.velocity.x != 0)
-        {
-            isRunning = true;
-        }
-        else
-        {
-            isRunning = false;
-        }
-
-        _animator.SetBool(_isRunningHash, isRunning);
+        _animator.SetBool(_isRunningHash, _rigidbody2D.velocity.x != 0);
     }
 }

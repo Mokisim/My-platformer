@@ -6,11 +6,12 @@ public class GroundDetector : MonoBehaviour
     [SerializeField] private float _groundRaycastLength = 0.7f;
     [SerializeField] private Transform _groundCheckPoint;
     [SerializeField] private LayerMask _groundLayer;
-    public bool OnGround { get; private set; }
+
+    public bool IsOnGround { get; private set; }
 
     public void CheckGroundCollisions()
     {
-        OnGround = Physics2D.Raycast(_groundCheckPoint.position + _groundRaycastOffset, Vector2.down, _groundRaycastLength, _groundLayer) ||
+        IsOnGround = Physics2D.Raycast(_groundCheckPoint.position + _groundRaycastOffset, Vector2.down, _groundRaycastLength, _groundLayer) ||
         Physics2D.Raycast(_groundCheckPoint.position - _groundRaycastOffset, Vector2.down, _groundRaycastLength, _groundLayer);
     }
 

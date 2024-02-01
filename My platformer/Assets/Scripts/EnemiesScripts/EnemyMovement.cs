@@ -11,8 +11,9 @@ public class EnemyMovement : MonoBehaviour
     private int _currentPoint;
     private bool _facingRight = true;
     
-    private bool _isPatrol = true;
     private bool _isFollow;
+
+    private PlayerHealth _player;
     
     private void Awake()
     {
@@ -26,70 +27,56 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        Patrol();
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.TryGetComponent<Player>(out Player player))
+        if (_isFollow == false)
         {
-            player.TakeDamage();
+            Patrol();
+        }
+        else
+        {
+            Follow(_player);
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
             _isFollow = true;
-            _isPatrol = false;
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
-            TrackTarget(player.transform);
+            _player = player;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
             _isFollow = false;
-            _isPatrol = true;
         }
     }
 
     private void Patrol()
     {
-        if (_isPatrol == true)
-        {
-            Transform target = _points[_currentPoint];
+        Transform target = _points[_currentPoint];
 
             transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
 
             if (transform.position == target.position)
             {
-                _currentPoint++;
-
-                if (_currentPoint >= _points.Length)
-                {
-                    _currentPoint = 0;
-                }
+                _currentPoint = ++_currentPoint % _points.Length;
             }
 
             TrackTarget(target);
-        }
-        else
-        {
-            return;
-        }
+    }
+
+    private void Follow(PlayerHealth player)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
+        TrackTarget(player.transform);
     }
 
     private void TrackTarget(Transform target)
     {
-        if (transform.position.x > target.position.x && _facingRight == false)
-        {
-            Flip();
-        }
-        else if (transform.position.x < target.position.x && _facingRight)
+        if (transform.position.x > target.position.x && _facingRight == false || transform.position.x < target.position.x && _facingRight)
         {
             Flip();
         }

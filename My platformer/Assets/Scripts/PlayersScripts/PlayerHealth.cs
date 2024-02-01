@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
 
-    [SerializeField] private int _maxHealth;
     public int CurrentHealth { get; private set; }
+
+    [SerializeField] private int _maxHealth;
+    private GameObject _playerSpawn;
 
     private void Start()
     {
         CurrentHealth = _maxHealth;
+        _playerSpawn = GameObject.FindWithTag(RespawnHash);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,9 +29,7 @@ public class Player : MonoBehaviour
     {
         CurrentHealth--;
 
-        GameObject playerSpawn = GameObject.FindWithTag(RespawnHash);
-
-        transform.position = playerSpawn.transform.position;
+        transform.position = _playerSpawn.transform.position;
         Debug.Log(CurrentHealth.ToString());
 
         if (CurrentHealth <= 0)
@@ -42,10 +43,6 @@ public class Player : MonoBehaviour
         if (CurrentHealth < _maxHealth)
         {
             CurrentHealth++;
-        }
-        else
-        {
-            return;
         }
 
         Debug.Log(CurrentHealth.ToString());

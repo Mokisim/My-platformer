@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    private const string _jumpInput = "Jump";
-    private const string _horizontalAxis = "Horizontal";
-    private const string _verticalAxis = "Vertical";
+    private const string JumpInput = "Jump";
+    private const string HorizontalAxis = "Horizontal";
+    private const string VerticalAxis = "Vertical";
 
     public Vector2 GetInput()
     {
-        return new Vector2(Input.GetAxisRaw(_horizontalAxis), Input.GetAxisRaw(_verticalAxis));
+        return new Vector2(Input.GetAxisRaw(HorizontalAxis), Input.GetAxisRaw(VerticalAxis));
     }
 
     public float GetHorizontalAxisInput()
     {
-        return Input.GetAxisRaw(_horizontalAxis);
+        return Input.GetAxisRaw(HorizontalAxis);
     }
 
     public float GetVerticalAxisInput()
     {
-        return Input.GetAxisRaw(_verticalAxis);
+        return Input.GetAxisRaw(VerticalAxis);
     }
 
     public bool GetJumpInput()
     {
-        return Input.GetButtonDown(_jumpInput);
+        return Input.GetButtonDown(JumpInput);
     }
 
     public bool GetDashInput()

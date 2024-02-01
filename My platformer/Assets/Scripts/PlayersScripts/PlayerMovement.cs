@@ -1,12 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(InputReader))]
-[RequireComponent(typeof(GroundDetector))]
-[RequireComponent(typeof(WallDetector))]
-[RequireComponent(typeof(ApplicationLinearDrag))]
+[RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(InputReader))]
+[RequireComponent(typeof(GroundDetector), typeof(WallDetector), typeof(ApplicationLinearDrag))]
 [RequireComponent(typeof(FallMultiplyer))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _facingRight = true;
     private float _horizontalDirection;
-    private float _horizontal;
     private float _movementSpeed = 5f;
 
     [Header("Jump")]
@@ -51,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _playerTransform = GetComponent<Transform>();
         _inputManager = GetComponent<InputReader>();
         _groundCheck = GetComponent<GroundDetector>();
         _wallCheck = GetComponent<WallDetector>();
@@ -61,18 +54,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _horizontalDirection = _inputManager.GetInput().x;
-        _horizontal = _inputManager.GetHorizontalAxisInput();
+        _horizontalDirection = _inputManager.GetHorizontalAxisInput();
 
-        if (_horizontal > 0 && _facingRight == false)
+        if (_horizontalDirection > 0 && _facingRight == false || _horizontalDirection < 0 && _facingRight)
         {
             Flip();
         }
-        else if (_horizontal < 0 && _facingRight)
-        {
-            Flip();
-        }
-
+        
         if (_canJump && _inputManager.GetJumpInput())
         {
             if ((_hangTimeCounter <= 0) && (_aviableJumps == _jumpsValue))
@@ -108,12 +96,12 @@ public class PlayerMovement : MonoBehaviour
         _groundCheck.CheckGroundCollisions();
         _wallCheck.CheckWallCollisions();
 
-        if (_groundCheck.OnGround || _isWallSliding == false || _isWallJumping == false)
+        if (_groundCheck.IsOnGround || _isWallSliding == false || _isWallJumping == false)
         {
-            _rigidbody2D.velocity = new Vector2(_horizontal * _movementSpeed, _rigidbody2D.velocity.y);
+            _rigidbody2D.velocity = new Vector2(_horizontalDirection * _movementSpeed, _rigidbody2D.velocity.y);
         }
 
-        if (_groundCheck.OnGround)
+        if (_groundCheck.IsOnGround)
         {
             _applyingLinearDrag.ApplyGroundLinearDrag(_rigidbody2D);
 
@@ -140,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        if (_wallCheck.IsWalled && _groundCheck.OnGround == false && _inputManager.GetHorizontalAxisInput() != 0)
+        if (_wallCheck.IsWalled && _groundCheck.IsOnGround == false && _inputManager.GetHorizontalAxisInput() != 0)
         {
             _isWallSliding = true;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, Mathf.Clamp(_rigidbody2D.velocity.y, -_wallSlidingSpeed, float.MaxValue));
