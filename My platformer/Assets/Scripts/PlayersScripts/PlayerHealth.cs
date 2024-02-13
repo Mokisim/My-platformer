@@ -5,13 +5,19 @@ public class PlayerHealth : MonoBehaviour
     private const string RespawnHash = "Respawn";
 
     public int CurrentHealth { get; private set; }
+    public int MaxHealth {  get; private set; }
 
-    [SerializeField] private int _maxHealth;
     private GameObject _playerSpawn;
+    private int _maxHealth = 3;
+
+    private void Awake()
+    {
+        MaxHealth = _maxHealth;
+    }
 
     private void Start()
     {
-        CurrentHealth = _maxHealth;
+        CurrentHealth = MaxHealth;
         _playerSpawn = GameObject.FindWithTag(RespawnHash);
     }
 
@@ -40,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreHealth()
     {
-        if (CurrentHealth < _maxHealth)
+        if (CurrentHealth < MaxHealth)
         {
             CurrentHealth++;
         }

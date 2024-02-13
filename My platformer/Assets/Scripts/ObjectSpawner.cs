@@ -18,10 +18,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             _points.Add(_spawnPoint.GetChild(i));
         }
-    }
 
-    private void Start()
-    {
         if (_objectCount <= 0)
         {
             Spawn(_points);
