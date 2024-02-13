@@ -4,20 +4,20 @@ public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
 
-    public int CurrentHealth { get; private set; }
-    public int MaxHealth {  get; private set; }
+    public float CurrentHealth { get; private set; }
+    public float MaxHealth {  get; private set; }
 
     private GameObject _playerSpawn;
-    private int _maxHealth = 3;
+    private float _maxHealth = 3;
 
     private void Awake()
     {
         MaxHealth = _maxHealth;
+        CurrentHealth = MaxHealth;
     }
 
     private void Start()
     {
-        CurrentHealth = MaxHealth;
         _playerSpawn = GameObject.FindWithTag(RespawnHash);
     }
 
