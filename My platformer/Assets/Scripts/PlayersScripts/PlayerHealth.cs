@@ -3,22 +3,23 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
+    private const string CanvasHash = "Canvas";
 
     public float CurrentHealth { get; private set; }
-    public float MaxHealth {  get; private set; }
-
+    
     private GameObject _playerSpawn;
     private float _maxHealth = 3;
+    private HealthBar _healthBar;
 
     private void Awake()
     {
-        MaxHealth = _maxHealth;
-        CurrentHealth = MaxHealth;
+        CurrentHealth = _maxHealth;
     }
 
     private void Start()
     {
         _playerSpawn = GameObject.FindWithTag(RespawnHash);
+        _healthBar = GameObject.FindWithTag(CanvasHash).GetComponent<HealthBar>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,12 +29,16 @@ public class PlayerHealth : MonoBehaviour
             cherry.TryGetComponent<Item>(out Item item);
             item.DestroyWithSound();
             RestoreHealth();
+            _healthBar.UpdateSliderValue();
+            _healthBar.SmoothUpdateSliderValue();
+            _healthBar.SetTextValues();
         }
     }
 
     public void TakeDamage()
     {
         CurrentHealth--;
+
 
         transform.position = _playerSpawn.transform.position;
         Debug.Log(CurrentHealth.ToString());
@@ -42,11 +47,15 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("YOU LOST");
         }
+
+        _healthBar.UpdateSliderValue();
+        _healthBar.SmoothUpdateSliderValue();
+        _healthBar.SetTextValues();
     }
 
     public void RestoreHealth()
     {
-        if (CurrentHealth < MaxHealth)
+        if (CurrentHealth < _maxHealth)
         {
             CurrentHealth++;
         }

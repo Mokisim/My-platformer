@@ -13,11 +13,13 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private bool _isTextBar;
     [SerializeField] private TMP_Text _text;
     [SerializeField]private float _changeSpeed = 1f;
-    private GameObject _player;
+    private PlayerHealth _player;
+    private float _maxHealth;
 
     private void Start()
     {
-        _player = GameObject.FindWithTag(PlayerHash);
+        _player = FindAnyObjectByType<PlayerHealth>();
+        _maxHealth = _player.CurrentHealth;
 
         if (_slider != null)
         {
@@ -30,40 +32,24 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (_isSmooth == true)
-        {
-            SmoothUpdateSliderValue();
-        }
-        else if (_isTextBar == true)
-        {
-            SetTextValues();
-        }
-        else
-        {
-            UpdateSliderValue();
-        }
-    }
-
     private void SetSliderValues()
     {
-        _slider.maxValue = _player.GetComponent<PlayerHealth>().CurrentHealth/_player.GetComponent<PlayerHealth>().MaxHealth * 100;
+        _slider.maxValue = _player.GetComponent<PlayerHealth>().CurrentHealth/_maxHealth * 100;
         _slider.minValue = 0;
     }
 
-    private void UpdateSliderValue()
+    public void UpdateSliderValue()
     {
-        _slider.value = _player.GetComponent<PlayerHealth>().CurrentHealth / _player.GetComponent<PlayerHealth>().MaxHealth * 100;
+        _slider.value = _player.GetComponent<PlayerHealth>().CurrentHealth / _maxHealth * 100;
     }
 
-    private void SmoothUpdateSliderValue()
+    public void SmoothUpdateSliderValue()
     {
-        _slider.value = Mathf.MoveTowards(_slider.value, _player.GetComponent<PlayerHealth>().CurrentHealth / _player.GetComponent<PlayerHealth>().MaxHealth * 100, _changeSpeed * Time.deltaTime);
+        _slider.value = Mathf.MoveTowards(_slider.value, _player.GetComponent<PlayerHealth>().CurrentHealth / _maxHealth * 100, _changeSpeed * Time.deltaTime);
     }
 
-    private void SetTextValues()
+    public void SetTextValues()
     {
-        _text.text = $"{_player.GetComponent<PlayerHealth>().CurrentHealth}/{_player.GetComponent<PlayerHealth>().MaxHealth}";
+        _text.text = $"{_player.GetComponent<PlayerHealth>().CurrentHealth}/{_maxHealth}";
     }
 }
