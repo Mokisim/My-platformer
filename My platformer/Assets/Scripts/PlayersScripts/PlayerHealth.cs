@@ -67,15 +67,18 @@ public class PlayerHealth : MonoBehaviour
     public void GetHealthBar(HealthBar healthBar)
     {
         _healthBar = healthBar;
+        Debug.Log($"Передал значение для обычного бара, {_healthBar}");
     }
 
     public void GetHealthBar(SmoothHealthbar smoothHealthbar)
     {
         _smoothHealthbar = smoothHealthbar;
+        Debug.Log($"Передал значение для плавного бара, {_smoothHealthbar}");
     }
 
     public void GetHealthBar(TextHealthBar textHealthBar)
     {
         _textHealthBar = textHealthBar;
+        Debug.Log($"Передал значение для текстового бара, {_textHealthBar}");
     }
 }

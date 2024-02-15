@@ -12,10 +12,6 @@ public class TextHealthBar : MonoBehaviour
     private void Awake()
     {
         _player = FindObjectOfType<PlayerHealth>();
-    }
-
-    private void Start()
-    {
         _maxHealth = _player.CurrentHealth;
         SetTextValues();
         _player.GetHealthBar(this);
