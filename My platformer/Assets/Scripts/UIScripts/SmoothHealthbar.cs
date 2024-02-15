@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class SmoothHealthbar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
+    [SerializeField] private float _changeSpeed = 10f;
     private PlayerHealth _player;
     private float _maxHealth;
 
@@ -18,9 +18,9 @@ public class HealthBar : MonoBehaviour
         _player.GetHealthBar(this);
     }
 
-    public void UpdateSliderValue()
+    public void SmoothUpdateSliderValue()
     {
-        _slider.value = _player.CurrentHealth / _maxHealth * 100;
+        _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentHealth / _maxHealth * 100, _changeSpeed * Time.deltaTime);
     }
 
     private void SetSliderValues()

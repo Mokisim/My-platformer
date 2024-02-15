@@ -3,13 +3,14 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
-    private const string CanvasHash = "Canvas";
-
+    
     public float CurrentHealth { get; private set; }
     
     private GameObject _playerSpawn;
     private float _maxHealth = 3;
     private HealthBar _healthBar;
+    private SmoothHealthbar _smoothHealthbar;
+    private TextHealthBar _textHealthBar;
 
     private void Awake()
     {
@@ -19,7 +20,6 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         _playerSpawn = GameObject.FindWithTag(RespawnHash);
-        _healthBar = GameObject.FindWithTag(CanvasHash).GetComponent<HealthBar>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,9 +29,6 @@ public class PlayerHealth : MonoBehaviour
             cherry.TryGetComponent<Item>(out Item item);
             item.DestroyWithSound();
             RestoreHealth();
-            _healthBar.UpdateSliderValue();
-            _healthBar.SmoothUpdateSliderValue();
-            _healthBar.SetTextValues();
         }
     }
 
@@ -49,8 +46,8 @@ public class PlayerHealth : MonoBehaviour
         }
 
         _healthBar.UpdateSliderValue();
-        _healthBar.SmoothUpdateSliderValue();
-        _healthBar.SetTextValues();
+        _smoothHealthbar.SmoothUpdateSliderValue();
+        _textHealthBar.SetTextValues();
     }
 
     public void RestoreHealth()
@@ -61,5 +58,24 @@ public class PlayerHealth : MonoBehaviour
         }
 
         Debug.Log(CurrentHealth.ToString());
+
+        _healthBar.UpdateSliderValue();
+        _smoothHealthbar.SmoothUpdateSliderValue();
+        _textHealthBar.SetTextValues();
+    }
+
+    public void GetHealthBar(HealthBar healthBar)
+    {
+        _healthBar = healthBar;
+    }
+
+    public void GetHealthBar(SmoothHealthbar smoothHealthbar)
+    {
+        _smoothHealthbar = smoothHealthbar;
+    }
+
+    public void GetHealthBar(TextHealthBar textHealthBar)
+    {
+        _textHealthBar = textHealthBar;
     }
 }

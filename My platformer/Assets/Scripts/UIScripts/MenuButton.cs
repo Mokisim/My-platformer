@@ -7,14 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuButton : MonoBehaviour
 {
-    private const string PlayerHash = "Player";
-
-    private GameObject _player;
-    private int _delay = 1;
-
-    private void Start()
+    private PlayerHealth _player;
+    
+    private void Awake()
     {
-        Invoke("FindPlayer", _delay);
+        _player = FindObjectOfType<PlayerHealth>();
     }
 
     public void Play(int sceneNumber)
@@ -29,16 +26,11 @@ public class MenuButton : MonoBehaviour
 
     public void Damage()
     {
-        _player.GetComponent<PlayerHealth>().TakeDamage();
+        _player.TakeDamage();
     }
 
     public void Heal()
     {
-        _player.GetComponent<PlayerHealth>().RestoreHealth();
-    }
-
-    private void FindPlayer()
-    {
-        _player = GameObject.FindWithTag(PlayerHash);
+        _player.RestoreHealth();
     }
 }
