@@ -14,10 +14,19 @@ public class TextHealthBar : MonoBehaviour
         _player = FindObjectOfType<PlayerHealth>();
         _maxHealth = _player.CurrentHealth;
         SetTextValues();
-        _player.GetHealthBar(this);
     }
 
-    public void SetTextValues()
+    private void OnEnable()
+    {
+        _player.HealthChanged += SetTextValues;
+    }
+
+    private void OnDisable()
+    {
+        _player.HealthChanged -= SetTextValues;
+    }
+
+    private void SetTextValues()
     {
         _text.text = $"{_player.CurrentHealth}/{_maxHealth}";
     }
