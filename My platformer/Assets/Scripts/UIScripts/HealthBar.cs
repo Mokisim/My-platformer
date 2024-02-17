@@ -25,25 +25,25 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_isSmooth == false)
+        if (_isSmooth == true)
         {
-            _player.HealthChanged += UpdateSliderValue;
+            _player.HealthChanged += SmoothUpdateSliderValue;
         }
         else
         {
-            _player.HealthChanged += SmoothUpdateSliderValue;
+            _player.HealthChanged += UpdateSliderValue;
         }
     }
 
     private void OnDisable()
     {
-        if (_isSmooth == false)
+        if (_isSmooth == true)
         {
-            _player.HealthChanged -= UpdateSliderValue;
+            _player.HealthChanged -= SmoothUpdateSliderValue;
         }
         else
         {
-            _player.HealthChanged -= SmoothUpdateSliderValue;
+            _player.HealthChanged -= UpdateSliderValue;
         }
     }
 
