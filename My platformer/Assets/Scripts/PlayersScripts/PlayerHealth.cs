@@ -63,7 +63,5 @@ public class PlayerHealth : MonoBehaviour
         {
             HealthChanged.Invoke();
         }
-
-        Debug.Log(CurrentHealth.ToString());
     }
 }
