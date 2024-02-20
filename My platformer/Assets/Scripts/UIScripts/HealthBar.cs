@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private float _changeSpeed = 10f;
+    [SerializeField] private float _changeSpeed = 100f;
     [SerializeField] private Slider _slider;
     [SerializeField] private bool _isSmooth;
     private PlayerHealth _player;
@@ -27,7 +27,7 @@ public class HealthBar : MonoBehaviour
     {
         if (_isSmooth == true)
         {
-            _player.HealthChanged += SmoothUpdateSliderValue;
+            _player.HealthChanged += StartSmoothUpdateHealthBar;
         }
         else
         {
@@ -39,7 +39,7 @@ public class HealthBar : MonoBehaviour
     {
         if (_isSmooth == true)
         {
-            _player.HealthChanged -= SmoothUpdateSliderValue;
+            _player.HealthChanged -= StopSmoothUpdateHealthBar;
         }
         else
         {
@@ -47,14 +47,29 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    private IEnumerator UpdateSmoothHealthBar()
+    {
+        while (_slider.value != _player.CurrentHealth / _maxHealth * 100)
+        {
+            _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentHealth / _maxHealth * 100, _changeSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
+    private void StartSmoothUpdateHealthBar()
+    {
+        StartCoroutine(UpdateSmoothHealthBar());
+    }
+
+    private void StopSmoothUpdateHealthBar()
+    {
+        StopCoroutine(UpdateSmoothHealthBar());
+    }
+
     private void UpdateSliderValue()
     {
         _slider.value = _player.CurrentHealth / _maxHealth * 100;
-    }
-
-    private void SmoothUpdateSliderValue()
-    {
-        _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentHealth / _maxHealth * 100, _changeSpeed * Time.deltaTime);
     }
 
     private void SetSliderValues()
