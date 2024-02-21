@@ -44,8 +44,6 @@ public class PlayerHealth : MonoBehaviour
             HealthChanged.Invoke();
         }
 
-        Debug.Log(CurrentHealth.ToString());
-
         if (CurrentHealth <= 0)
         {
             Debug.Log("YOU LOST");

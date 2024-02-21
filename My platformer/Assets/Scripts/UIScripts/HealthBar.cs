@@ -4,21 +4,21 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private float _changeSpeed = 100f;
+    [SerializeField] private float _changeSpeed = 0.5f;
     [SerializeField] private Slider _slider;
     [SerializeField] private bool _isSmooth;
     private PlayerHealth _player;
-    private float _maxHealth;
+    private Coroutine _coroutine;
 
     private void Awake()
     {
         _player = FindObjectOfType<PlayerHealth>();
+        SetSliderValues();
     }
 
     private void Start()
     {
-        _maxHealth = _player.CurrentHealth;
-        SetSliderValues();
+        _coroutine = StartCoroutine(UpdateSmoothHealthBar());
     }
 
     private void OnEnable()
@@ -47,9 +47,9 @@ public class HealthBar : MonoBehaviour
 
     private IEnumerator UpdateSmoothHealthBar()
     {
-        while (_slider.value != _player.CurrentHealth / _maxHealth * 100)
+        while (_slider.value != _player.CurrentHealth)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentHealth / _maxHealth * 100, _changeSpeed * Time.deltaTime);
+            _slider.value = Mathf.MoveTowards(_slider.value, _player.CurrentHealth, _changeSpeed * Time.deltaTime);
 
             yield return null;
         }
@@ -62,18 +62,21 @@ public class HealthBar : MonoBehaviour
 
     private void StopSmoothUpdateHealthBar()
     {
-        StopCoroutine(UpdateSmoothHealthBar());
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
     }
 
     private void UpdateSliderValue()
     {
-        _slider.value = _player.CurrentHealth / _maxHealth * 100;
+        _slider.value = _player.CurrentHealth;
     }
 
     private void SetSliderValues()
     {
-        _slider.maxValue = _player.CurrentHealth / _maxHealth * 100;
+        _slider.maxValue = _player.CurrentHealth;
         _slider.minValue = 0;
-        _slider.value = _player.CurrentHealth / _maxHealth * 100;
+        _slider.value = _player.CurrentHealth;
     }
 }
