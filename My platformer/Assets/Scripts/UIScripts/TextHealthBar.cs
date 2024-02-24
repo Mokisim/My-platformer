@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class TextHealthBar : MonoBehaviour
+public class TextHealthBar : HealthView
 {
     [SerializeField] private TMP_Text _text;
     private PlayerHealth _player;
@@ -11,20 +11,16 @@ public class TextHealthBar : MonoBehaviour
     {
         _player = FindObjectOfType<PlayerHealth>();
         _maxHealth = _player.CurrentHealth;
-        SetTextValues();
+        GetHealthComponent(_player);
+        SetValues();
     }
 
-    private void OnEnable()
+    public override void UpdateHealth(float targetValue)
     {
-        _player.HealthChanged += SetTextValues;
+        _text.text = $"{targetValue}/{_maxHealth}";
     }
 
-    private void OnDisable()
-    {
-        _player.HealthChanged -= SetTextValues;
-    }
-
-    private void SetTextValues()
+    public override void SetValues()
     {
         _text.text = $"{_player.CurrentHealth}/{_maxHealth}";
     }

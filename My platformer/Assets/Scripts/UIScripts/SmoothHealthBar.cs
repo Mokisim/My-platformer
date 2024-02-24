@@ -1,19 +1,19 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class SmoothHealthBar : HealthView
 {
     [SerializeField] private float _changeSpeed = 0.5f;
     [SerializeField] private Slider _slider;
-    [SerializeField] private bool _isSmooth;
     private PlayerHealth _player;
     private Coroutine _coroutine;
 
     private void Awake()
     {
         _player = FindObjectOfType<PlayerHealth>();
-        SetSliderValues();
+        SetValues();
     }
 
     private void Start()
@@ -21,28 +21,16 @@ public class HealthBar : MonoBehaviour
         _coroutine = StartCoroutine(UpdateSmoothHealthBar(_player.CurrentHealth));
     }
 
-    private void OnEnable()
+    public override void UpdateHealth(float targetValue)
     {
-        if (_isSmooth == true)
-        {
-            _player.HealthChanged += StartSmoothUpdateHealthBar;
-        }
-        else
-        {
-            _player.HealthChanged += UpdateSliderValue;
-        }
+        
     }
 
-    private void OnDisable()
+    public override void SetValues()
     {
-        if (_isSmooth == true)
-        {
-            _player.HealthChanged -= StopSmoothUpdateHealthBar;
-        }
-        else
-        {
-            _player.HealthChanged -= UpdateSliderValue;
-        }
+        _slider.maxValue = _player.CurrentHealth;
+        _slider.minValue = 0;
+        _slider.value = _player.CurrentHealth;
     }
 
     private IEnumerator UpdateSmoothHealthBar(float targetValue)
@@ -66,17 +54,5 @@ public class HealthBar : MonoBehaviour
         {
             StopCoroutine(_coroutine);
         }
-    }
-
-    private void UpdateSliderValue(float targetValue)
-    {
-        _slider.value = targetValue;
-    }
-
-    private void SetSliderValues()
-    {
-        _slider.maxValue = _player.CurrentHealth;
-        _slider.minValue = 0;
-        _slider.value = _player.CurrentHealth;
     }
 }

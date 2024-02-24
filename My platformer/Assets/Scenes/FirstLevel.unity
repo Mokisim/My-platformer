@@ -2008,6 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947ed34dba73a8a49a6682751b83cb2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHealth: 0
 --- !u!1 &744735647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2934,7 +2935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea5066a2370bef46a0f98de2e6c8fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _changeSpeed: 1
+  _changeSpeed: 10
   _slider: {fileID: 2116117654}
   _isSmooth: 1
 --- !u!1001 &819307565455150901

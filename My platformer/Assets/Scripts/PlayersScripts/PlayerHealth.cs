@@ -4,14 +4,13 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
-    
-    public float CurrentHealth { get; private set; }
+
+    public event Action<float> HealthChanged;
+    public float CurrentHealth;
     
     private GameObject _playerSpawn;
     private float _maxHealth = 3;
-
-    public event Action HealthChanged;
-
+    
     private void Awake()
     {
         CurrentHealth = _maxHealth;
@@ -41,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
 
         if(HealthChanged != null) 
         {
-            HealthChanged.Invoke();
+            HealthChanged?.Invoke(CurrentHealth);
         }
 
         if (CurrentHealth <= 0)
@@ -59,7 +58,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (HealthChanged != null)
         {
-            HealthChanged.Invoke();
+            HealthChanged?.Invoke(CurrentHealth);
         }
     }
 }
