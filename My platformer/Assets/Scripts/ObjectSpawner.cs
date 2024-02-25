@@ -27,6 +27,8 @@ public class ObjectSpawner : MonoBehaviour
         {
             Spawn(GenerateRandomSpawnPoints());
         }
+
+        FindObjectOfType<HealthView>().GetPlayerHealth(_objectPrefab.GetComponent<PlayerHealth>());
     }
 
     private void Spawn(List<Transform> points)

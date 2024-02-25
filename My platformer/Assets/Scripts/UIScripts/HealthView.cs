@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class HealthView : MonoBehaviour
 {
     private PlayerHealth _health;
-    protected bool IsOnEnable;
     
     private void Awake()
     {
@@ -12,17 +11,20 @@ public abstract class HealthView : MonoBehaviour
 
     private void OnEnable()
     {
-        IsOnEnable = true;
         _health.HealthChanged += UpdateHealth;
     }
 
     private void OnDisable()
     {
-        IsOnEnable = false;
         _health.HealthChanged -= UpdateHealth;
     }
 
     public abstract void UpdateHealth(float targetValue);
 
-    public virtual void SetValues(float maxHealth, float currentHealth) { }
+    public abstract void SetValues(float maxHealth, float currentHealth);
+
+    public void GetPlayerHealth(PlayerHealth playerHealth)
+    {
+        _health = playerHealth;
+    }
 }

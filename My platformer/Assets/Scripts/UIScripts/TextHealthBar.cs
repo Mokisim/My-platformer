@@ -13,7 +13,7 @@ public class TextHealthBar : HealthView
 
     public override void SetValues(float maxHealth, float currentHealth)
     {
-        _text.text = $"{currentHealth}/{maxHealth}";
         _maxHealth = maxHealth;
+        _text.text = $"{currentHealth}/{maxHealth}";
     }
 }
