@@ -6,60 +6,32 @@ public class SmoothHealthBar : HealthView
 {
     [SerializeField] private float _changeSpeed = 10f;
     [SerializeField] private Slider _slider;
-    private PlayerHealth _player;
     private Coroutine _coroutine;
-
-    private void Awake()
-    {
-        _player = FindObjectOfType<PlayerHealth>();
-        SetValues();
-        GetHealthComponent(_player);
-    }
-
-    private void Start()
-    {
-        _coroutine = StartCoroutine(UpdateSmoothHealthBar(_player.CurrentHealth));
-    }
 
     public override void UpdateHealth(float targetValue)
     {
-        if(IsOnEnable == true)
+        if(_coroutine != null)
         {
-            StartSmoothUpdateHealthBar(targetValue);
+            StopCoroutine(_coroutine);
         }
-        else
-        {
-            StopSmoothUpdateHealthBar(targetValue);
-        }
+
+        _coroutine = StartCoroutine(UpdateSmoothHealthBar(targetValue));
     }
 
-    public override void SetValues()
+    public override void SetValues(float maxHealth, float currentHealth)
     {
-        _slider.maxValue = _player.CurrentHealth;
+        _slider.maxValue = maxHealth;
         _slider.minValue = 0;
-        _slider.value = _player.CurrentHealth;
+        _slider.value = currentHealth;
     }
 
     private IEnumerator UpdateSmoothHealthBar(float targetValue)
     {
-        while (_slider.value != _player.CurrentHealth)
+        while (_slider.value != targetValue)
         {
             _slider.value = Mathf.MoveTowards(_slider.value, targetValue, _changeSpeed * Time.deltaTime);
 
             yield return null;
-        }
-    }
-
-    private void StartSmoothUpdateHealthBar(float targetValue)
-    {
-        StartCoroutine(UpdateSmoothHealthBar(targetValue));
-    }
-
-    private void StopSmoothUpdateHealthBar(float t)
-    {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
         }
     }
 }

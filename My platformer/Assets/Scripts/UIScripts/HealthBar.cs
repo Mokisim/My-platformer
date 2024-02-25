@@ -4,19 +4,8 @@ using UnityEngine.UI;
 
 public class HealthBar : HealthView
 {
-    [SerializeField] private float _changeSpeed = 0.5f;
     [SerializeField] private Slider _slider;
-    [SerializeField] private bool _isSmooth;
-    private PlayerHealth _player;
-    private Coroutine _coroutine;
-
-    private void Awake()
-    {
-        _player = FindObjectOfType<PlayerHealth>();
-        SetValues();
-        GetHealthComponent(_player);
-    }
-
+    
     public override void UpdateHealth(float targetValue)
     {
         UpdateSliderValue(targetValue);
@@ -27,10 +16,10 @@ public class HealthBar : HealthView
         _slider.value = targetValue;
     }
 
-    public override void SetValues()
+    public override void SetValues(float maxHealth, float currentHealth)
     {
-        _slider.maxValue = _player.CurrentHealth;
+        _slider.maxValue = maxHealth;
         _slider.minValue = 0;
-        _slider.value = _player.CurrentHealth;
+        _slider.value = currentHealth;
     }
 }

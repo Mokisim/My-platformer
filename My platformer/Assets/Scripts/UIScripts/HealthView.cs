@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class HealthView : MonoBehaviour
 {
     private PlayerHealth _health;
     protected bool IsOnEnable;
+    
+    private void Awake()
+    {
+        SetValues(_health.CurrentHealth, _health.CurrentHealth);
+    }
 
     private void OnEnable()
     {
@@ -21,10 +24,5 @@ public abstract class HealthView : MonoBehaviour
 
     public abstract void UpdateHealth(float targetValue);
 
-    public virtual void SetValues() { }
-
-    public void GetHealthComponent(PlayerHealth health)
-    {
-        _health = health;
-    }
+    public virtual void SetValues(float maxHealth, float currentHealth) { }
 }

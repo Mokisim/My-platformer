@@ -2843,7 +2843,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2116117653}
   - component: {fileID: 2116117654}
-  - component: {fileID: 2116117655}
   - component: {fileID: 2116117656}
   m_Layer: 5
   m_Name: SmoothHealthBar
@@ -2924,21 +2923,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2116117655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116117652}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ea5066a2370bef46a0f98de2e6c8fbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _changeSpeed: 10
-  _slider: {fileID: 2116117654}
-  _isSmooth: 1
 --- !u!114 &2116117656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,7 +2935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895a001cdf43b884ca540ffaf1e4ab5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _changeSpeed: 5
+  _changeSpeed: 10
   _slider: {fileID: 2116117654}
 --- !u!1001 &819307565455150901
 PrefabInstance:
