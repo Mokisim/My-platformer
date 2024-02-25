@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : HealthView
 {
     [SerializeField] private float _changeSpeed = 0.5f;
     [SerializeField] private Slider _slider;
@@ -13,59 +13,13 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         _player = FindObjectOfType<PlayerHealth>();
-        SetSliderValues();
+        SetValues();
+        GetHealthComponent(_player);
     }
 
-    private void Start()
+    public override void UpdateHealth(float targetValue)
     {
-        _coroutine = StartCoroutine(UpdateSmoothHealthBar(_player.CurrentHealth));
-    }
-
-    private void OnEnable()
-    {
-        if (_isSmooth == true)
-        {
-            _player.HealthChanged += StartSmoothUpdateHealthBar;
-        }
-        else
-        {
-            _player.HealthChanged += UpdateSliderValue;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (_isSmooth == true)
-        {
-            _player.HealthChanged -= StopSmoothUpdateHealthBar;
-        }
-        else
-        {
-            _player.HealthChanged -= UpdateSliderValue;
-        }
-    }
-
-    private IEnumerator UpdateSmoothHealthBar(float targetValue)
-    {
-        while (_slider.value != _player.CurrentHealth)
-        {
-            _slider.value = Mathf.MoveTowards(_slider.value, targetValue, _changeSpeed * Time.deltaTime);
-
-            yield return null;
-        }
-    }
-
-    private void StartSmoothUpdateHealthBar(float targetValue)
-    {
-        StartCoroutine(UpdateSmoothHealthBar(targetValue));
-    }
-
-    private void StopSmoothUpdateHealthBar(float t)
-    {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
+        UpdateSliderValue(targetValue);
     }
 
     private void UpdateSliderValue(float targetValue)
@@ -73,7 +27,7 @@ public class HealthBar : MonoBehaviour
         _slider.value = targetValue;
     }
 
-    private void SetSliderValues()
+    public override void SetValues()
     {
         _slider.maxValue = _player.CurrentHealth;
         _slider.minValue = 0;

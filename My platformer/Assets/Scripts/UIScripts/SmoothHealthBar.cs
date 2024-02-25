@@ -1,11 +1,10 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SmoothHealthBar : HealthView
 {
-    [SerializeField] private float _changeSpeed = 0.5f;
+    [SerializeField] private float _changeSpeed = 10f;
     [SerializeField] private Slider _slider;
     private PlayerHealth _player;
     private Coroutine _coroutine;
@@ -14,6 +13,7 @@ public class SmoothHealthBar : HealthView
     {
         _player = FindObjectOfType<PlayerHealth>();
         SetValues();
+        GetHealthComponent(_player);
     }
 
     private void Start()
@@ -23,7 +23,14 @@ public class SmoothHealthBar : HealthView
 
     public override void UpdateHealth(float targetValue)
     {
-        
+        if(IsOnEnable == true)
+        {
+            StartSmoothUpdateHealthBar(targetValue);
+        }
+        else
+        {
+            StopSmoothUpdateHealthBar(targetValue);
+        }
     }
 
     public override void SetValues()
