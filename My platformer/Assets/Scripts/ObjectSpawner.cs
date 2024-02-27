@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
@@ -28,7 +27,10 @@ public class ObjectSpawner : MonoBehaviour
             Spawn(GenerateRandomSpawnPoints());
         }
 
-        FindObjectOfType<HealthView>().GetPlayerHealth(_objectPrefab.GetComponent<PlayerHealth>());
+        foreach(HealthView healthView in FindObjectsOfType<HealthView>())
+        {
+            healthView.GetPlayerHealth(_objectPrefab.GetComponent<PlayerHealth>());
+        }
     }
 
     private void Spawn(List<Transform> points)

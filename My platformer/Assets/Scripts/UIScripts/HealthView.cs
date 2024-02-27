@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class HealthView : MonoBehaviour
 {
-    private PlayerHealth _health;
+    public PlayerHealth _health;
     
     private void Awake()
     {
