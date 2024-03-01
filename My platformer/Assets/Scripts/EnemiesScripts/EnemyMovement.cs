@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     
     private bool _isFollow;
 
-    private PlayerHealth _player;
+    private Player _player;
     
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<PlayerHealth>(out PlayerHealth player))
+        if (collision.TryGetComponent<Player>(out Player player))
         {
             _isFollow = true;
             _player = player;
@@ -48,7 +48,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<PlayerHealth>(out PlayerHealth player))
+        if (collision.TryGetComponent<Player>(out Player player))
         {
             _isFollow = false;
         }
@@ -68,7 +68,7 @@ public class EnemyMovement : MonoBehaviour
             TrackTarget(target);
     }
 
-    private void Follow(PlayerHealth player)
+    private void Follow(Player player)
     {
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
         TrackTarget(player.transform);

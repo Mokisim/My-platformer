@@ -1,11 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : HealthView
 {
     [SerializeField] private Slider _slider;
-    
+
     public override void UpdateHealth(float targetValue)
     {
         UpdateSliderValue(targetValue);

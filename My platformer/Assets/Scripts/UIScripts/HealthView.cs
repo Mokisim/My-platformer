@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class HealthView : MonoBehaviour
 {
-    public PlayerHealth _health;
+    [SerializeField]private Health _health;
     
     private void Awake()
     {
@@ -22,9 +22,4 @@ public abstract class HealthView : MonoBehaviour
     public abstract void UpdateHealth(float targetValue);
 
     public abstract void SetValues(float maxHealth, float currentHealth);
-
-    public void GetPlayerHealth(PlayerHealth playerHealth)
-    {
-        _health = playerHealth;
-    }
 }

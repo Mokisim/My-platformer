@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuButton : MonoBehaviour
 {
-    private PlayerHealth _player;
+    private Health _player;
     
     private void Awake()
     {
-        _player = FindObjectOfType<PlayerHealth>();
+        _player = FindObjectOfType<Health>();
     }
 
     public void Play(int sceneNumber)

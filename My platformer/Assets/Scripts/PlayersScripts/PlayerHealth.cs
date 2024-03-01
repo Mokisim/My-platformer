@@ -1,19 +1,18 @@
-using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Health), typeof(PlayerCollisionHandler))]
 public class PlayerHealth : MonoBehaviour
 {
     private const string RespawnHash = "Respawn";
 
-    public event Action<float> HealthChanged;
-    public float CurrentHealth;
-    
     private GameObject _playerSpawn;
-    private float _maxHealth = 3;
-    
+    private Health _health;
+    private PlayerCollisionHandler _playerCollisionHandler;
+
     private void Awake()
     {
-        CurrentHealth = _maxHealth;
+        _health = GetComponent<Health>();
+        _playerCollisionHandler = GetComponent<PlayerCollisionHandler>();
     }
 
     private void Start()
@@ -21,44 +20,20 @@ public class PlayerHealth : MonoBehaviour
         _playerSpawn = GameObject.FindWithTag(RespawnHash);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnEnable()
     {
-        if (collision.TryGetComponent<Cherry>(out Cherry cherry))
-        {
-            cherry.TryGetComponent<Item>(out Item item);
-            item.DestroyWithSound();
-            RestoreHealth();
-        }
+        _health.HealthDecreased += GoToRespawn;
+        _playerCollisionHandler.HealthHealed += _health.RestoreHealth;
     }
 
-    public void TakeDamage()
+    private void OnDisable()
     {
-        CurrentHealth--;
+        _health.HealthDecreased -= GoToRespawn;
+        _playerCollisionHandler.HealthHealed -= _health.RestoreHealth;
+    }
 
-
+    public void GoToRespawn()
+    {
         transform.position = _playerSpawn.transform.position;
-
-        if(HealthChanged != null) 
-        {
-            HealthChanged?.Invoke(CurrentHealth);
-        }
-
-        if (CurrentHealth <= 0)
-        {
-            Debug.Log("YOU LOST");
-        }
-    }
-
-    public void RestoreHealth()
-    {
-        if (CurrentHealth < _maxHealth)
-        {
-            CurrentHealth++;
-        }
-
-        if (HealthChanged != null)
-        {
-            HealthChanged?.Invoke(CurrentHealth);
-        }
     }
 }
