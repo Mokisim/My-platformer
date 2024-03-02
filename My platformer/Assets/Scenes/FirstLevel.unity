@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4581338728925221138, guid: 8e606b32e7e4cef41896b4345210b7db, type: 3}
+      propertyPath: m_Name
+      value: HealthBarDino
+      objectReference: {fileID: 0}
     - target: {fileID: 4641829771692995529, guid: 8e606b32e7e4cef41896b4345210b7db, type: 3}
       propertyPath: m_Name
       value: DinoEnemy
@@ -2136,6 +2140,10 @@ PrefabInstance:
     - target: {fileID: 433880348436385755, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228032875042849212, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
+      propertyPath: m_Name
+      value: HealthBarBat
       objectReference: {fileID: 0}
     - target: {fileID: 2433757381525507196, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
       propertyPath: m_Name
