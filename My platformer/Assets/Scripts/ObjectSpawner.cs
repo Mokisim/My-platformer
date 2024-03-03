@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _objectPrefab;
+    [SerializeField] private Transform _prefabTransform;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _objectCount;
 
     private List<Transform> _points;
+    private GameObject _objectPrefab;
 
     private void Awake()
     {
+        _objectPrefab = _prefabTransform.gameObject;
         _points = new List<Transform>(_spawnPoint.childCount);
 
         for (int i = 0; i < _spawnPoint.childCount; i++)

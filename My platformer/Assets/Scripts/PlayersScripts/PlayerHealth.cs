@@ -3,9 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health), typeof(PlayerCollisionHandler))]
 public class PlayerHealth : MonoBehaviour
 {
-    private const string RespawnHash = "Respawn";
-
-    private GameObject _playerSpawn;
+    private Transform _playerSpawn;
     private Health _health;
     private PlayerCollisionHandler _playerCollisionHandler;
 
@@ -17,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        _playerSpawn = GameObject.FindWithTag(RespawnHash);
+        _playerSpawn = FindObjectOfType<PlayerSpawnPoint>().transform;
     }
 
     private void OnEnable()
