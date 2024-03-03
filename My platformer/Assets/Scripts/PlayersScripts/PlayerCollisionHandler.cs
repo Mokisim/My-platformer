@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PlayerCollisionHandler : MonoBehaviour
 {
-    public event Action HealthHealed;
+    public event Action<float> HealthHealed;
+
+    private float _healValue = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,7 +18,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             cherry.TryGetComponent<Item>(out Item item);
             item.DestroyWithSound();
-            HealthHealed?.Invoke();
+            HealthHealed?.Invoke(_healValue);
         }
     }
 }

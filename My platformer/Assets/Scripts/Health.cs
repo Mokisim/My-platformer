@@ -7,18 +7,19 @@ public class Health : MonoBehaviour
     public event Action HealthDecreased;
     public event Action HealthIncreased;
 
-    public float CurrentHealth {  get; private set; }
+    public float CurrentHealth { get; private set; }
 
-    [SerializeField]private float _maxHealth = 3;
+    [SerializeField] private float _maxHealth = 3;
+    private float _minHealth = 0;
 
     private void Awake()
     {
         CurrentHealth = _maxHealth;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        CurrentHealth--;
+        CurrentHealth = Mathf.Clamp(CurrentHealth - damage, _minHealth, _maxHealth);
 
         if (HealthChanged != null || HealthDecreased != null)
         {
@@ -27,12 +28,9 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void RestoreHealth()
+    public void RestoreHealth(float heal)
     {
-        if (CurrentHealth < _maxHealth)
-        {
-            CurrentHealth++;
-        }
+        CurrentHealth = Mathf.Clamp(CurrentHealth + heal, _minHealth, _maxHealth);
 
         if (HealthChanged != null || HealthIncreased != null)
         {

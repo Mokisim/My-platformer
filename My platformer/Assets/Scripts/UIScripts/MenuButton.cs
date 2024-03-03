@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class MenuButton : MonoBehaviour
 {
     private Health _player;
+    private float _damage = 1;
     
     private void Awake()
     {
@@ -26,11 +27,11 @@ public class MenuButton : MonoBehaviour
 
     public void Damage()
     {
-        _player.TakeDamage();
+        _player.TakeDamage(_damage);
     }
 
     public void Heal()
     {
-        _player.RestoreHealth();
+        _player.RestoreHealth(_damage);
     }
 }
