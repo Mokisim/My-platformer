@@ -9,16 +9,15 @@ public class HealthBar : HealthView
     {
         UpdateSliderValue(targetValue);
     }
-
-    private void UpdateSliderValue(float targetValue)
-    {
-        _slider.value = targetValue;
-    }
-
     public override void SetValues(float maxHealth, float currentHealth)
     {
         _slider.maxValue = maxHealth;
         _slider.minValue = 0;
         _slider.value = currentHealth;
+    }
+
+    private void UpdateSliderValue(float targetValue)
+    {
+        _slider.value = targetValue;
     }
 }

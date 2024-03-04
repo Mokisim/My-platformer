@@ -20,13 +20,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.HealthDecreased += GoToRespawn;
+        _health.HealthOver += GoToRespawn;
         _playerCollisionHandler.HealthHealed += _health.RestoreHealth;
     }
 
     private void OnDisable()
     {
-        _health.HealthDecreased -= GoToRespawn;
+        _health.HealthOver -= GoToRespawn;
         _playerCollisionHandler.HealthHealed -= _health.RestoreHealth;
     }
 

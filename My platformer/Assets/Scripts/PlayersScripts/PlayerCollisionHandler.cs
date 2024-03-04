@@ -11,13 +11,11 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if (collision.TryGetComponent<Gem>(out Gem gem))
         {
-            gem.TryGetComponent<Item>(out Item item);
-            item.DestroyWithSound();
+            gem.DestroyWithSound();
         }
         else if (collision.TryGetComponent<Cherry>(out Cherry cherry))
         {
-            cherry.TryGetComponent<Item>(out Item item);
-            item.DestroyWithSound();
+            cherry.DestroyWithSound();
             HealthHealed?.Invoke(_healValue);
         }
     }
