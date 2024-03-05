@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3904856545514165313}
   - component: {fileID: 7278318523872765547}
   - component: {fileID: 1235699790532673808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,8 +86,8 @@ GameObject:
   - component: {fileID: 1482439782039594993}
   - component: {fileID: 4544161537628604262}
   - component: {fileID: 8694379767231839541}
-  m_Layer: 0
-  m_Name: HealthBar
+  m_Layer: 6
+  m_Name: HealthBarDino
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 2801106852719238498}
   - component: {fileID: 3926264172343013230}
   - component: {fileID: 1685142824391798451}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DinoEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 7771819066021370960}
   - component: {fileID: 3633096427745461363}
   - component: {fileID: 687078721493634633}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 9142155481083154916}
   - component: {fileID: 8733969677640795297}
   - component: {fileID: 4009857056498199966}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyHealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6595478960168858186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

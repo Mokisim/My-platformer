@@ -1,11 +1,9 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(Animator))]
 public class AnimationSwitcher : MonoBehaviour
 {
-    private GroundDetector _groundCheck;
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
 
@@ -14,7 +12,6 @@ public class AnimationSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        _groundCheck = GetComponent<GroundDetector>();
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }

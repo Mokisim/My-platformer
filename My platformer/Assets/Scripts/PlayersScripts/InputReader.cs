@@ -30,5 +30,10 @@ public class InputReader : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.Mouse1);
     }
+
+    public bool GetAttackInput()
+    {
+        return Input.GetKeyDown(KeyCode.Mouse0);
+    }
 }
 

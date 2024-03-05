@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 196025895054785837}
   - component: {fileID: 1622016597288443725}
   - component: {fileID: 945975268968302127}
-  m_Layer: 0
-  m_Name: HealthBar
+  m_Layer: 6
+  m_Name: HealthBarBat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 7661251248561967451}
   - component: {fileID: 5078106486785625088}
   - component: {fileID: 2811439713859680052}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 6504467183137175622}
   - component: {fileID: 7669954531845864234}
   - component: {fileID: 532391949678598312}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BatEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5627961088265336746}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 3820182904972615409}
   - component: {fileID: 2131838358396277840}
   - component: {fileID: 3743283423444459241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 2575015546899754140}
   - component: {fileID: 1852943147802115647}
   - component: {fileID: 42642659023357511}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyHealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

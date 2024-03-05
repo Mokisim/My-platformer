@@ -35,6 +35,8 @@ public class Health : MonoBehaviour
                 HealthOver?.Invoke();
             }
         }
+
+        Debug.Log("Я получил урон");
     }
 
     public void RestoreHealth(float heal)
