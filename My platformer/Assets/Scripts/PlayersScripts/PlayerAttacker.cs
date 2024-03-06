@@ -19,6 +19,7 @@ public class PlayerAttacker : MonoBehaviour
         if (_inputReader.GetAttackInput())
         {
             Attack();
+            Debug.Log("Я атаковал");
         }
     }
 
@@ -26,10 +27,17 @@ public class PlayerAttacker : MonoBehaviour
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayers);
 
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Debug.Log($"{enemies[i]}");
+        }
+
         foreach(Collider2D enemy in enemies)
         {
-            enemy.TryGetComponent<Health>(out Health enemyHealth);
-            enemyHealth.TakeDamage(_damage);
+            if (enemy.TryGetComponent<Health>(out Health enemyHealth) == true)
+            {
+                enemyHealth.TakeDamage(_damage);
+            }
         }
     }
 }

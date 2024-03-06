@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Health), typeof(PlayerCollisionHandler))]
-public class PlayerHealth : MonoBehaviour
+public class PlayerEventHandler : MonoBehaviour
 {
     private Transform _playerSpawn;
     private Health _health;
