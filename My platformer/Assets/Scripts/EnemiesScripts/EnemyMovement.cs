@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
     [SerializeField] private bool _canFollow;
+    [SerializeField] private EnemyVisibilityArea _visibilityArea;
     
     private Transform[] _points;
     private float _speed = 4f;
@@ -27,6 +28,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+        _isFollow = _visibilityArea.IsPlayer;
+
         if (_isFollow == false)
         {
             Patrol();
@@ -37,21 +40,14 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnEnable()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            _isFollow = true;
-            _player = player;
-        }
+        _visibilityArea.PlayerNoticed += SetPlayer;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnDisable()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            _isFollow = false;
-        }
+        _visibilityArea.PlayerNoticed -= SetPlayer;
     }
 
     private void Patrol()
@@ -72,6 +68,11 @@ public class EnemyMovement : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
         TrackTarget(player.transform);
+    }
+
+    private void SetPlayer(Player player)
+    {
+        _player = player;
     }
 
     private void TrackTarget(Transform target)

@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private float _wallJumpingTime = 0.2f;
     private float _wallJumpingCounter = 1f;
     private float _wallJumpingDuration = 0.3f;
+
     public bool IsWallSliding { get { return _isWallSliding; } private set { } }
 
     private void Awake()
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-        
+
         if (_canJump && _inputManager.GetJumpInput())
         {
             if ((_hangTimeCounter <= 0) && (_aviableJumps == _jumpsValue))

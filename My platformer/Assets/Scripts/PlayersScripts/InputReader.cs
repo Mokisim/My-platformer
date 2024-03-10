@@ -26,6 +26,11 @@ public class InputReader : MonoBehaviour
         return Input.GetButtonDown(JumpInput);
     }
 
+    public bool GetJumpButton()
+    {
+        return Input.GetButton(JumpInput);
+    }
+
     public bool GetDashInput()
     {
         return Input.GetKeyDown(KeyCode.Mouse1);
