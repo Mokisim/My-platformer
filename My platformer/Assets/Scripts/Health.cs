@@ -23,12 +23,8 @@ public class Health : MonoBehaviour
         if (damage > 0)
         {
             CurrentHealth = Mathf.Clamp(CurrentHealth - damage, _minHealth, _maxHealth);
-
-            if (HealthChanged != null || HealthDecreased != null)
-            {
-                HealthChanged?.Invoke(CurrentHealth);
-                HealthDecreased?.Invoke();
-            }
+            HealthChanged?.Invoke(CurrentHealth);
+            HealthDecreased?.Invoke();
 
             if (HealthOver != null && CurrentHealth == 0)
             {
@@ -42,12 +38,8 @@ public class Health : MonoBehaviour
         if (heal > 0)
         {
             CurrentHealth = Mathf.Clamp(CurrentHealth + heal, _minHealth, _maxHealth);
-
-            if (HealthChanged != null || HealthIncreased != null)
-            {
-                HealthChanged?.Invoke(CurrentHealth);
-                HealthIncreased?.Invoke();
-            }
+            HealthChanged?.Invoke(CurrentHealth);
+            HealthIncreased?.Invoke();
         }
     }
 }

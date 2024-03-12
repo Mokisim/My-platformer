@@ -40,5 +40,10 @@ public class InputReader : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
+
+    public bool GetVampirismInput()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
 }
 
