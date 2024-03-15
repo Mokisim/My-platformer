@@ -818,7 +818,8 @@ MonoBehaviour:
   _enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  _skillRadius: 1.12
+  _skillRadius: 2.9
+  _vampirism: 0.5
 --- !u!114 &5805160379795279536
 MonoBehaviour:
   m_ObjectHideFlags: 0

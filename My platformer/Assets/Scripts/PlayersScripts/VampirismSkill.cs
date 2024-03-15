@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
 public class VampirismSkill : PlayerSkills
@@ -10,14 +9,19 @@ public class VampirismSkill : PlayerSkills
     [SerializeField] private LayerMask _enemyLayers;
     [SerializeField] private float _skillRadius;
     [SerializeField] private float _vampirism = 0.5f;
-    private float _duration = 6;
-    private float _cooldown = 10;
+    private float _duration = 6f;
+    private float _damageDealRate = 0.5f;
+    private float _cooldown = 10f;
     private float _nextActionTime;
     private Health _health;
+    private WaitForSeconds _waitCooldown;
+    private WaitForSeconds _damageRate;
 
     private void Awake()
     {
         _health = GetComponent<Health>();
+        _waitCooldown = new WaitForSeconds(_cooldown);
+        _damageRate = new WaitForSeconds(_damageDealRate);
     }
 
     public override bool SetInput()
@@ -27,7 +31,7 @@ public class VampirismSkill : PlayerSkills
 
     public override void UseSkill()
     {
-        if(Time.time > _nextActionTime)
+        if (Time.time >= _nextActionTime)
         {
             StartCoroutine(StealHealth());
         }
@@ -50,28 +54,35 @@ public class VampirismSkill : PlayerSkills
                 distanceEnemies.Add(enemies[j], distance[j]);
             }
 
-            float minDistance = distance.Min();
-
-            var targetEnemies = distanceEnemies.Where(enemy => enemy.Value == minDistance);
-
-            foreach (var enemy in targetEnemies)
+            if (distance.Count > 0)
             {
-                if(enemy.Key.GetComponent<Health>().CurrentHealth < _vampirism)
+                float minDistance = distance.Min();
+
+
+                var targetEnemies = distanceEnemies.Where(enemy => enemy.Value == minDistance);
+
+
+                foreach (var enemy in targetEnemies)
                 {
-                    vampirismValue = enemy.Key.GetComponent<Health>().CurrentHealth;
+                    if (enemy.Key.GetComponent<Health>().CurrentHealth < _vampirism)
+                    {
+                        vampirismValue = enemy.Key.GetComponent<Health>().CurrentHealth;
+                    }
+
+                    if (enemy.Key.GetComponent<Health>().CurrentHealth > 0)
+                    {
+                        enemy.Key.GetComponent<Health>().TakeDamage(vampirismValue);
+                        _health.RestoreHealth(vampirismValue);
+                    }
                 }
 
-                if (enemy.Key.GetComponent<Health>().CurrentHealth > 0)
-                {
-                    enemy.Key.GetComponent<Health>().TakeDamage(vampirismValue);
-                    _health.RestoreHealth(vampirismValue);
-                }
+                vampirismValue = _vampirism;
             }
 
-            vampirismValue = _vampirism;
+            yield return _damageRate;
         }
 
-        yield return new WaitForSeconds(_cooldown);
+        yield return _waitCooldown;
     }
 
     private void OnDrawGizmos()

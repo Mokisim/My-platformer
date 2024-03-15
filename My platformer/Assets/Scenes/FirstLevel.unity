@@ -2181,6 +2181,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 835905953679326421, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
+      propertyPath: _maxHealth
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 945975268968302127, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
+      propertyPath: _changeSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2433757381525507196, guid: f6323dcc6ec72cb42bff74127505206a, type: 3}
       propertyPath: m_Name
       value: BatEnemy
