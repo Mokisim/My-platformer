@@ -5,7 +5,7 @@ public abstract class PlayerSkills : MonoBehaviour
 {
     public InputReader InputReader {  get; private set; }
     
-    private void Awake()
+    private void Start()
     {
         InputReader = GetComponent<InputReader>();
     }
