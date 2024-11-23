@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(InputReader), typeof(PlayerMovement))]
 public class PlayerAttacker : MonoBehaviour
 {
+    [SerializeField] private FireballSkill _fireballSkill;
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] LayerMask _enemyLayers;
@@ -13,9 +14,13 @@ public class PlayerAttacker : MonoBehaviour
     private PlayerMovement _playerMovement;
     private float _startAttackPosition;
     private float _wallAttackPosition;
+    private int _attackCount;
+
+    public int AttackCount => _attackCount;
     
     private void Awake()
     {
+        _attackCount = 0;
         _inputReader = GetComponent<InputReader>();
         _playerMovement = GetComponent<PlayerMovement>();
         _startAttackPosition = _attackPoint.localPosition.x;
@@ -39,6 +44,16 @@ public class PlayerAttacker : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        _fireballSkill.FireballThrowed += ResetAttackCounter;
+    }
+
+    private void OnDisable()
+    {
+        _fireballSkill.FireballThrowed -= ResetAttackCounter;
+    }
+
     private void Attack()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayers);
@@ -48,8 +63,19 @@ public class PlayerAttacker : MonoBehaviour
             if (enemy.TryGetComponent<Health>(out Health enemyHealth) == true)
             {
                 enemyHealth.TakeDamage(_damage);
+                _attackCount++;
+            }
+
+            if(_attackCount >= 11)
+            {
+                _attackCount = 0;
             }
         }
+    }
+
+    private void ResetAttackCounter()
+    {
+        _attackCount = 0;
     }
 
     private void OnDrawGizmos()

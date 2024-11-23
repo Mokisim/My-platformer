@@ -45,5 +45,10 @@ public class InputReader : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.Q);
     }
+
+    public bool GetFireballInput()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
 }
 

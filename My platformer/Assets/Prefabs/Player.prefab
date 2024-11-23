@@ -663,10 +663,12 @@ GameObject:
   - component: {fileID: 1558697361943715615}
   - component: {fileID: 4894255186292595436}
   - component: {fileID: 6685343258268172641}
+  - component: {fileID: 5035058132111383163}
   - component: {fileID: 5805160379795279536}
   - component: {fileID: 3835740153303581742}
   - component: {fileID: -9186506834406137255}
   - component: {fileID: 2437871640145305197}
+  - component: {fileID: 1495158501247390273}
   - component: {fileID: -8324024294333796275}
   - component: {fileID: 7072692467268573362}
   - component: {fileID: 9145982739188793060}
@@ -820,6 +822,22 @@ MonoBehaviour:
     m_Bits: 64
   _skillRadius: 2.9
   _vampirism: 0.5
+--- !u!114 &5035058132111383163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809633502103549621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1531b58a7c41e5244a6bb825f3f9d3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireballPrefab: {fileID: -7220269838896637987, guid: 747b44c7931a9f940a5f8e38f6f87693, type: 3}
+  _attacker: {fileID: 3835740153303581742}
+  _attackPoint: {fileID: 3701194711982305546}
+  _pool: {fileID: 0}
 --- !u!114 &5805160379795279536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,6 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b907f40e4be134b97643a95244a78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fireballSkill: {fileID: 5035058132111383163}
   _attackPoint: {fileID: 3701194711982305546}
   _attackRange: 0.49
   _enemyLayers:
@@ -875,6 +894,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59302682badee55498c93c7b97432ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1495158501247390273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809633502103549621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2b28759b0c5cc48b51f12e1500b0d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _container: {fileID: 0}
+  _prefab: {fileID: 5447273492436736564, guid: 747b44c7931a9f940a5f8e38f6f87693, type: 3}
 --- !u!114 &-8324024294333796275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -912,6 +945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21171f2326f89f849ac66e279c30e6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dashDistance: 20
+  _dashTime: 0.3
   _jumpsValue: 1
   _wallJumpingPower: {x: 25, y: 15}
 --- !u!114 &2260216575431674941

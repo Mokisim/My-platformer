@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(InputReader))]
@@ -19,6 +20,15 @@ public class PlayerMovement : MonoBehaviour
     private bool _facingRight = true;
     private float _horizontalDirection;
     private float _movementSpeed = 5f;
+
+    public bool FacingRight => _facingRight;
+
+    [Header("Dash")]
+    [SerializeField] private float _dashDistance;
+    [SerializeField] private float _dashTime = 0.4f;
+
+    private bool _isDashing;
+    private Coroutine _dashCoroutine;
 
     [Header("Jump")]
     [SerializeField] private int _jumpsValue = 1;
@@ -56,6 +66,22 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _horizontalDirection = _inputManager.GetHorizontalAxisInput();
+
+        if (_inputManager.GetDashInput() && _isDashing == false)
+        {
+            if (_facingRight == true)
+            {
+                _dashCoroutine = StartCoroutine(Dash(1f));
+            }
+            else
+            {
+                _dashCoroutine = StartCoroutine(Dash(-1f));
+            }
+        }
+        else if (_isDashing == false && _dashCoroutine != null)
+        {
+            StopCoroutine(_dashCoroutine);
+        }
 
         if (_horizontalDirection > 0 && _facingRight == false || _horizontalDirection < 0 && _facingRight)
         {
@@ -97,27 +123,38 @@ public class PlayerMovement : MonoBehaviour
         _groundCheck.CheckGroundCollisions();
         _wallCheck.CheckWallCollisions();
 
-        if (_groundCheck.IsOnGround || _isWallSliding == false || _isWallJumping == false)
+        if (_isDashing == false)
         {
-            _rigidbody2D.velocity = new Vector2(_horizontalDirection * _movementSpeed, _rigidbody2D.velocity.y);
-        }
-
-        if (_groundCheck.IsOnGround)
-        {
-            _applyingLinearDrag.ApplyGroundLinearDrag(_rigidbody2D);
-
-            if (_jumpInputChecker > 0)
+            if (_groundCheck.IsOnGround || _isWallSliding == false || _isWallJumping == false)
             {
-                _hangTimeCounter = _hangTime;
-                _aviableJumps = _jumpsValue;
+                _rigidbody2D.velocity = new Vector2(_horizontalDirection * _movementSpeed, _rigidbody2D.velocity.y);
+            }
+
+            if (_groundCheck.IsOnGround)
+            {
+                _applyingLinearDrag.ApplyGroundLinearDrag(_rigidbody2D);
+
+                if (_jumpInputChecker > 0)
+                {
+                    _hangTimeCounter = _hangTime;
+                    _aviableJumps = _jumpsValue;
+                }
+            }
+            else
+            {
+                _applyingLinearDrag.ApplyAirLinearDrag(_rigidbody2D);
+                _fallMultiplier.FallMultiply(_rigidbody2D);
+                _jumpBufferCounter -= Time.deltaTime;
+                _jumpInputChecker = 1;
             }
         }
-        else
+    }
+
+    private void OnDisable()
+    {
+        if (_dashCoroutine != null)
         {
-            _applyingLinearDrag.ApplyAirLinearDrag(_rigidbody2D);
-            _fallMultiplier.FallMultiply(_rigidbody2D);
-            _jumpBufferCounter -= Time.deltaTime;
-            _jumpInputChecker = 1;
+            StopCoroutine(_dashCoroutine);
         }
     }
 
@@ -178,6 +215,22 @@ public class PlayerMovement : MonoBehaviour
     private void StopWallJumping()
     {
         _isWallJumping = false;
+    }
+
+    private IEnumerator Dash(float direction)
+    {
+        _isDashing = true;
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0f);
+        _rigidbody2D.AddForce(new Vector2(_dashDistance * direction, 0f), ForceMode2D.Impulse);
+        float gravity = _rigidbody2D.gravityScale;
+        _rigidbody2D.gravityScale = 0;
+
+        yield return new WaitForSeconds(_dashTime);
+
+        _isDashing = false;
+        _rigidbody2D.gravityScale = gravity;
+
+        Debug.Log("dash");
     }
 
     private void Flip()
